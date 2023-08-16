@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/ultisnips",
     url = "https://github.com/SirVer/ultisnips"
   },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/iota/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
   ["vim-go"] = {
     loaded = true,
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/vim-go",

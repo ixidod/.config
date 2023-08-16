@@ -12,7 +12,7 @@ return require("packer").startup(function(use)
 
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jayp0521/mason-null-ls.nvim")
-
+	use("tpope/vim-fugitive")
 	use("ThePrimeagen/harpoon")
 
 	use({ "rose-pine/neovim", as = "rose-pine" })
