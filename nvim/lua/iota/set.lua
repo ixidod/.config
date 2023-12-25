@@ -2,6 +2,7 @@ vim.o.laststatus = 3
 vim.g.mapleader = " "
 vim.opt.guicursor = ""
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.g.copilot_assume_mapped = true
 
 vim.opt.nu = true
 vim.opt.relativenumber = true

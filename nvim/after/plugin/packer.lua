@@ -9,6 +9,7 @@ return require("packer").startup(function(use)
 	use("phelipetls/vim-hugo")
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
+	use("github/copilot.vim")
 
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jayp0521/mason-null-ls.nvim")
