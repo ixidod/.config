@@ -5,7 +5,6 @@ local formatting = null_ls.builtins.formatting
 local sources = {
 	formatting.stylua,
 	formatting.prettier,
-
 }
 
 local lsp_formatting = function(bufnr)
