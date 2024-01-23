@@ -6,6 +6,8 @@ return require("packer").startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 	use("fatih/vim-go")
 	use("windwp/nvim-autopairs")
+	use("alvan/vim-closetag")
+	use("mattn/emmet-vim")
 	use("jose-elias-alvarez/null-ls.nvim")
 
 	use({ "rose-pine/neovim", as = "rose-pine" })

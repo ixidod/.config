@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["emmet-vim"] = {
+    loaded = true,
+    path = "/Users/iota/.local/share/nvim/site/pack/packer/start/emmet-vim",
+    url = "https://github.com/mattn/emmet-vim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -163,6 +168,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/ultisnips",
     url = "https://github.com/SirVer/ultisnips"
+  },
+  ["vim-closetag"] = {
+    loaded = true,
+    path = "/Users/iota/.local/share/nvim/site/pack/packer/start/vim-closetag",
+    url = "https://github.com/alvan/vim-closetag"
   },
   ["vim-go"] = {
     loaded = true,
