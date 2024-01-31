@@ -3,6 +3,7 @@ vim.cmd([[packadd packer.nvim]])
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
+	use("hashivim/vim-terraform")
 	use("nvim-treesitter/nvim-treesitter")
 	use("fatih/vim-go")
 	use("windwp/nvim-autopairs")

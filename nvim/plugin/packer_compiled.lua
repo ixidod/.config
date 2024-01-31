@@ -183,6 +183,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/iota/.local/share/nvim/site/pack/packer/start/vim-react-snippets",
     url = "https://github.com/mlaursen/vim-react-snippets"
+  },
+  ["vim-terraform"] = {
+    loaded = true,
+    path = "/Users/iota/.local/share/nvim/site/pack/packer/start/vim-terraform",
+    url = "https://github.com/hashivim/vim-terraform"
   }
 }
 
