@@ -9,6 +9,7 @@ local sources = {
 	formatting.black,
 	formatting.yamlfmt,
 	formatting.terraform_fmt,
+	formatting.hclfmt,
 	diagnostics.terraform_validate,
 }
 
