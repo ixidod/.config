@@ -1,6 +1,7 @@
 bindkey -v
 alias vi='nvim'
 setopt NO_CASE_GLOB
+source <(fzf --zsh)
 
 export PATH="/opt/homebrew/bin:$PATH"
 export GOPATH=/Users/iota/.go
