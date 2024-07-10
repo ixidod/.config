@@ -10,6 +10,7 @@ local sources = {
 	formatting.yamlfmt,
 	formatting.terraform_fmt,
 	formatting.hclfmt,
+	formatting.clang_format,
 	diagnostics.terraform_validate,
 }
 
