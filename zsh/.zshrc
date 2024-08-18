@@ -1,3 +1,4 @@
+export EDITOR=nvim
 bindkey -v
 alias vi='nvim'
 setopt NO_CASE_GLOB
