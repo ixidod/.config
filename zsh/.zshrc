@@ -1,6 +1,8 @@
 export EDITOR=nvim
 bindkey -v
 alias vi='nvim'
+alias k="kubectl"
+alias kgp="kubectl get pods"
 setopt NO_CASE_GLOB
 source <(fzf --zsh)
 
