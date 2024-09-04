@@ -21,4 +21,5 @@ source /opt/homebrew/etc/bash_completion.d/az
 eval "$(/opt/homebrew/bin/brew shellenv)"
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source <(fzf --zsh)
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
