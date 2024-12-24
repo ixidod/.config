@@ -2,9 +2,7 @@ local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
-	"tsserver",
-})
+lsp.ensure_installed({})
 
 -- Fix Undefined global 'vim'
 lsp.nvim_workspace()
