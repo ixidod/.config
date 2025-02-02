@@ -10,6 +10,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 export GOPATH=/Users/iota/.go
 export PATH=$GOPATH/bin:$PATH
 
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
 
 
