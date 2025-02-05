@@ -5,6 +5,7 @@ vim.opt.guicursor = ""
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.opt.nu = true
+vim.o.scrolloff = 50
 vim.opt.relativenumber = true
 
 vim.opt.tabstop = 2
@@ -25,13 +26,11 @@ vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "120"
 vim.opt.timeoutlen = 3000
 
 vim.g.netrw_browse_split = 0
@@ -41,3 +40,5 @@ vim.g.netrw_liststyle = 3
 vim.g.go_template_autocreate = 0
 
 vim.opt.clipboard:append("unnamedplus")
+
+
