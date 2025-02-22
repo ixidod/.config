@@ -32,18 +32,41 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- You'll find a list of language servers here:
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
--- These are example language servers.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig').yamlls.setup {
-  kubernetes = 'k8s-*.yaml',
-  ['http://json.schemastore.org/github-workflow'] = '.github/workflows/*',
-  ['http://json.schemastore.org/github-action'] = '.github/action.{yml,yaml}',
-  ['http://json.schemastore.org/ansible-stable-2.9'] = 'roles/tasks/**/*.{yml,yaml}',
-  ['http://json.schemastore.org/prettierrc'] = '.prettierrc.{yml,yaml}',
-  ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
-  ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
-  ['http://json.schemastore.org/circleciconfig'] = '.circleci/**/*.{yml,yaml}',
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemaStore = {
+        enable = true,
+        url = 'https://www.schemastore.org/api/json/catalog.json',
+      },
+      schemas = {
+        ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.28.0-standalone-strict/all.json'] = '*.k8s.yaml',
+        ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*',
+        ['https://json.schemastore.org/gitlab-ci'] = '.gitlab-ci.yml',
+      },
+    },
+  },
 }
 require('lspconfig').gopls.setup {}
 require('lspconfig').emmet_ls.setup {}
-require('lspconfig').lua_ls.setup {}
+require('lspconfig').lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file('', true), -- Add Neovim runtime files
+      },
+      telemetry = {
+        enable = false, -- Optional: Disable telemetry
+      },
+    },
+  },
+}
 require('lspconfig').terraformls.setup {}
