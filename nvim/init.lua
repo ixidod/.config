@@ -1,2 +1,1 @@
-require("iota")
-
+require 'iota'
