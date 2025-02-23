@@ -4,7 +4,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'hashivim/vim-terraform'
-  use 'nvim-treesitter/nvim-treesitter'
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'fatih/vim-go'
   use 'windwp/nvim-autopairs'
   use 'alvan/vim-closetag'

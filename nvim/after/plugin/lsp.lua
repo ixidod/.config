@@ -32,25 +32,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- You'll find a list of language servers here:
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig').yamlls.setup {
-  capabilities = capabilities,
   settings = {
     yaml = {
-      schemaStore = {
-        enable = true,
-        url = 'https://www.schemastore.org/api/json/catalog.json',
-      },
+      schemaStore = { enable = false },
       schemas = {
-        ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.28.0-standalone-strict/all.json'] = '*.k8s.yaml',
-        ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*',
-        ['https://json.schemastore.org/gitlab-ci'] = '.gitlab-ci.yml',
+        ['https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json'] = '.gitlab-ci.yml',
+        ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*.yml',
+        kubernetes = 'k8s/*.yaml',
       },
     },
+    validate = true,
+    completion = true,
+    hover = true,
   },
 }
 require('lspconfig').gopls.setup {}
-require('lspconfig').emmet_ls.setup {}
 require('lspconfig').lua_ls.setup {
   settings = {
     Lua = {
