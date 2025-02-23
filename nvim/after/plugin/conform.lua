@@ -7,7 +7,13 @@ require('conform').setup {
     rust = { 'rustfmt', lsp_format = 'fallback' },
     -- Conform will run the first available formatter
     javascript = { 'prettier', stop_after_first = true },
-    yaml = { 'yamlfmt' },
+    yaml = { 'prettier' },
+    formatters = {
+      prettier = {
+        command = 'prettier',
+        args = { '--stdin-filepath', '$FILENAME' },
+      },
+    },
     terraform = { 'terraform_fmt' },
     ['terraform-vars'] = { 'terraform_fmt' },
   },
