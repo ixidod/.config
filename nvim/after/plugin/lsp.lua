@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lspconfig').yamlls.setup {
   settings = {
     yaml = {
-      schemaStore = { enable = false },
+      schemaStore = { enable = true },
       schemas = {
         ['https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json'] = '.gitlab-ci.yml',
         ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*.yml',
@@ -68,3 +68,14 @@ require('lspconfig').lua_ls.setup {
 }
 require('lspconfig').terraformls.setup {}
 require('lspconfig').helm_ls.setup {}
+require('lspconfig').html.setup {
+  filetypes = { 'html' },
+  settings = {
+    html = {
+      format = { enable = true },
+      hover = { documentation = true },
+      validate = true,
+      autoClosingTags = true,
+    },
+  },
+}
