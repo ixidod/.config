@@ -66,7 +66,9 @@ require('lspconfig').lua_ls.setup {
     },
   },
 }
-require('lspconfig').terraformls.setup {}
+require('lspconfig').terraformls.setup {
+  filetypes = { 'terraform', 'tf', 'hcl' },
+}
 require('lspconfig').helm_ls.setup {}
 require('lspconfig').html.setup {
   filetypes = { 'html' },
