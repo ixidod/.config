@@ -12,12 +12,17 @@ export PATH=$GOPATH/bin:$PATH
 
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
-fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
+fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
 autoload -U compinit; compinit
 autoload -U +X bashcompinit && bashcompinit
 
-source /opt/homebrew/etc/bash_completion.d/az
 eval "$(/opt/homebrew/bin/brew shellenv)"
 source <(fzf --zsh)
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/iota/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions

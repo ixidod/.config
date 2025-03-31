@@ -10,3 +10,4 @@ zsh/.zcompdump
 zsh/.zcompcache
 containers/
 nvim/plugin/packer_compiled.lua
+glab-cli

@@ -37,6 +37,7 @@ require('lspconfig').yamlls.setup {
     yaml = {
       schemaStore = { enable = true },
       schemas = {
+        ['https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json'] = 'cf*.yml',
         ['https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json'] = '.gitlab-ci.yml',
         ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*.yml',
         kubernetes = 'k8s/*.yaml',
