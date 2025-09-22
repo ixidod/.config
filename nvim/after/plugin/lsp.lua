@@ -1,84 +1,115 @@
--- NOTE: to make any of this work you need a language server.
--- If you don't know what that is, watch this 5 min video:
--- https://www.youtube.com/watch?v=LaS32vctfOY
-
--- Reserve a space in the gutter
+-- --- UI niceties
 vim.opt.signcolumn = 'yes'
 
--- Add cmp_nvim_lsp capabilities settings to lspconfig
--- This should be executed before you configure any language server
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend('force', lspconfig_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
-
--- This is where you enable features that only work
--- if there is a language server active in the file
+-- --- LSP-driven keymaps (only when a client attaches)
 vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'LSP actions',
-  callback = function(event)
-    local opts = { buffer = event.buf }
-
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-  end,
+	desc = 'LSP actions',
+	callback = function(event)
+		local opts = { buffer = event.buf }
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+		vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+		vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
+		vim.keymap.set({ 'n', 'x' }, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
+		vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, opts)
+	end,
 })
 
--- You'll find a list of language servers here:
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-require('lspconfig').yamlls.setup {
-  settings = {
-    yaml = {
-      schemaStore = { enable = true },
-      schemas = {
-        ['https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json'] = 'cf*.yml',
-        ['https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json'] = '.gitlab-ci.yml',
-        ['https://json.schemastore.org/github-workflow'] = '.github/workflows/*.yml',
-        kubernetes = 'k8s/*.yaml',
-      },
-    },
-    validate = true,
-    completion = true,
-    hover = true,
-  },
+-- Capabilities from nvim-cmp
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Helper: merge with existing defaults (provided by nvim-lspconfig)
+local function with_defaults(name, overrides)
+	local base = vim.deepcopy(vim.lsp.config[name] or {})
+	return vim.tbl_deep_extend('force', base, overrides or {})
+end
+
+-- ---- Per-server configs (new style)
+
+vim.lsp.config['yamlls'] = with_defaults('yamlls', {
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			schemaStore = { enable = true },
+			schemas = {
+				['https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json'] = 'cf*.yml',
+				['https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json'] =
+				'.gitlab-ci.yml',
+				['https://json.schemastore.org/github-workflow'] = '.github/workflows/*.yml',
+				kubernetes = 'k8s/*.yaml',
+			},
+		},
+		validate = true,
+		completion = true,
+		hover = true,
+	},
+})
+
+vim.lsp.config['gopls'] = with_defaults('gopls', {
+	capabilities = capabilities,
+})
+
+vim.lsp.config['lua_ls'] = with_defaults('lua_ls', {
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			runtime = { version = 'LuaJIT' },
+			diagnostics = { globals = { 'vim' } },
+			workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+			telemetry = { enable = false },
+		},
+	},
+})
+
+vim.lsp.config['terraformls'] = with_defaults('terraformls', {
+	capabilities = capabilities,
+	filetypes = { 'terraform', 'tf', 'hcl' },
+})
+
+vim.lsp.config['helm_ls'] = with_defaults('helm_ls', {
+	capabilities = capabilities,
+})
+
+vim.lsp.config['html'] = with_defaults('html', {
+	capabilities = capabilities,
+	filetypes = { 'html' },
+	settings = {
+		html = {
+			format = { enable = true },
+			hover = { documentation = true },
+			validate = true,
+			autoClosingTags = true,
+		},
+	},
+})
+
+-- ---- Start the right server when a buffer with a matching filetype opens
+
+local ft_to_server = {
+	yaml = 'yamlls',
+	yml = 'yamlls',
+	go = 'gopls',
+	lua = 'lua_ls',
+	terraform = 'terraformls',
+	tf = 'terraformls',
+	hcl = 'terraformls',
+	helm = 'helm_ls',
+	html = 'html',
 }
-require('lspconfig').gopls.setup {}
-require('lspconfig').lua_ls.setup {
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true), -- Add Neovim runtime files
-      },
-      telemetry = {
-        enable = false, -- Optional: Disable telemetry
-      },
-    },
-  },
-}
-require('lspconfig').terraformls.setup {
-  filetypes = { 'terraform', 'tf', 'hcl' },
-}
-require('lspconfig').helm_ls.setup {}
-require('lspconfig').html.setup {
-  filetypes = { 'html' },
-  settings = {
-    html = {
-      format = { enable = true },
-      hover = { documentation = true },
-      validate = true,
-      autoClosingTags = true,
-    },
-  },
-}
+
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = vim.tbl_keys(ft_to_server),
+	callback = function(args)
+		local ft = vim.bo[args.buf].filetype
+		local name = ft_to_server[ft]
+		if not name then return end
+		local cfg = vim.deepcopy(vim.lsp.config[name] or {})
+		-- Make sure the client associates with the current buffer
+		cfg.bufnr = args.buf
+		vim.lsp.start(cfg)
+	end,
+})

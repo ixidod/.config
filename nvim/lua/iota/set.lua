@@ -1,3 +1,4 @@
+vim.opt.shortmess:append("I")
 vim.cmd 'colorscheme rose-pine'
 vim.o.laststatus = 3
 vim.g.mapleader = ' '

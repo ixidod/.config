@@ -13,7 +13,7 @@ export PATH=$GOPATH/bin:$PATH
 
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+#source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
 autoload -U compinit; compinit
