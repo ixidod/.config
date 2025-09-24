@@ -1,6 +1,3 @@
-nvim/site/pack/*/start/*
-nvim/site/pack/*/opt/*
-
 argocd/
 htop/
 mpv 

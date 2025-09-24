@@ -1,8 +1,7 @@
 
+mkdir -p ~/.local/share/nvim/site/pack/plugins/start
 
-mkdir -p ~/.config/nvim/site/pack/plugins/start
 
-cd ~/.config/nvim/site/pack/plugins/start
 git clone https://github.com/hashivim/vim-terraform
 git clone https://github.com/nvim-treesitter/nvim-treesitter
 git clone https://github.com/fatih/vim-go
@@ -23,6 +22,6 @@ git clone https://github.com/nvim-telescope/telescope.nvim
 
 for update run this shit: 
 
-cd ~/.config/nvim/site/pack/plugins/start \
+cd ~/.local/share/nvim/site/pack/plugins/start \
   && for d in *; do [ -d "$d/.git" ] && git -C "$d" pull --ff-only; done
 
