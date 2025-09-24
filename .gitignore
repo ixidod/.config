@@ -1,14 +1,14 @@
-nvim/plugin/packer_compiled.lua
+nvim/site/pack/*/start/*
+nvim/site/pack/*/opt/*
+
 argocd/
 htop/
 mpv 
 gh
-packer
 gcloud
 zsh/.zsh_history
 zsh/.zsh_sessions
 zsh/.zcompdump
 zsh/.zcompcache
 containers/
-nvim/plugin/packer_compiled.lua
 glab-cli

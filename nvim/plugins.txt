@@ -1,0 +1,24 @@
+https://github.com/hashivim/vim-terraform
+https://github.com/nvim-treesitter/nvim-treesitter
+https://github.com/fatih/vim-go
+https://github.com/windwp/nvim-autopairs
+https://github.com/alvan/vim-closetag
+https://github.com/rose-pine/neovim
+https://github.com/neovim/nvim-lspconfig
+https://github.com/hrsh7th/nvim-cmp
+https://github.com/hrsh7th/cmp-nvim-lsp
+https://github.com/hrsh7th/cmp-buffer
+https://github.com/hrsh7th/cmp-path
+https://github.com/L3MON4D3/LuaSnip
+https://github.com/saadparwaiz1/cmp_luasnip
+https://github.com/hrsh7th/cmp-cmdline
+https://github.com/stevearc/conform.nvim
+https://github.com/nvim-lua/plenary.nvim
+https://github.com/nvim-telescope/telescope.nvim
+
+
+for update run this shit: 
+
+cd ~/.config/nvim/site/pack/plugins/start \
+  && for d in *; do [ -d "$d/.git" ] && git -C "$d" pull --ff-only; done
+
