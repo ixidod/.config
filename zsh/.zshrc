@@ -1,5 +1,8 @@
+
 export EDITOR=nvim
 bindkey -v
+
+alias nvim-update='for d in /Users/iota/.local/share/nvim/site/pack/plugins/start/*/.git; do (cd "${d%/.git}" && echo "Updating $(basename "$PWD")" && git pull --ff-only); done'
 
 alias vi='nvim'
 alias k="kubectl"
