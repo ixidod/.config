@@ -12,9 +12,7 @@ export GOPATH=/Users/iota/.go
 export PATH=$GOPATH/bin:$PATH
 
 autoload -Uz compinit && compinit
-
 fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
-autoload -U +X bashcompinit && bashcompinit
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
