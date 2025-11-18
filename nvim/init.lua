@@ -4,9 +4,6 @@ vim.g.mapleader = ' '
 vim.opt.guicursor = ''
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
-vim.opt.spell = true
-vim.opt.spelllang = { 'en_gb' }
-
 vim.opt.nu = true
 vim.o.scrolloff = 50
 vim.opt.relativenumber = true

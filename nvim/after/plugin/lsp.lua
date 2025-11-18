@@ -124,6 +124,26 @@ vim.lsp.config['html'] = with_defaults('html', {
   },
 })
 
+-- sqls LSP config (Neovim 0.11+)
+vim.lsp.config(
+  'sqls',
+  with_defaults('sqls', {
+    cmd = { 'sqls' }, -- binary must be on PATH
+    capabilities = capabilities,
+    filetypes = { 'sql', 'mysql', 'plsql' },
+
+    -- let core LSP find the project root using markers
+    root_markers = { 'sqls.yml', '.sqls.yml', '.git' },
+
+    settings = {
+      sqls = {
+        -- optional: connections etc. if you do not use sqls.yml
+        -- connections = { ... }
+      },
+    },
+  })
+)
+
 -- ---- Start the right server when a buffer with a matching filetype opens
 
 local ft_to_server = {
@@ -137,6 +157,7 @@ local ft_to_server = {
   helm = 'helm_ls',
   html = 'html',
   python = 'pyright',
+  sql = 'sqls',
 }
 
 vim.api.nvim_create_autocmd('FileType', {
