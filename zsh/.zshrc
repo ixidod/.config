@@ -1,18 +1,46 @@
+# --- PYTHON ---
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# --- NO CASE ===
+setopt NO_CASE_GLOB
+
+# --- Editor / Keybindings ---
 export EDITOR=nvim
 bindkey -v
 
-alias nvim-update='for d in /Users/iota/.local/share/nvim/site/pack/plugins/start/*/.git; do (cd "${d%/.git}" && echo "Updating $(basename "$PWD")" && git pull --ff-only); done'
-
+# --- Aliases ---
 alias vi='nvim'
-setopt NO_CASE_GLOB
+alias snowsql="/Applications/SnowSQL.app/Contents/MacOS/snowsql"
+
+# Update all plugin Git repos
+alias nvim-update='for d in $HOME/.local/share/nvim/site/pack/plugins/start/*/.git; do (cd "${d%/.git}" && echo "Updating $(basename "$PWD")" && git pull --ff-only); done'
+
+# --- PATH ---
+export PATH="/opt/homebrew/bin:$PATH"
+export GOPATH="$HOME/.go"
+export PATH="$GOPATH/bin:$PATH"
+
+# --- Homebrew environment (must come BEFORE compinit) ---
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# --- fzf ---
 source <(fzf --zsh)
 
-export PATH="/opt/homebrew/bin:$PATH"
-export GOPATH=/Users/iota/.go
-export PATH=$GOPATH/bin:$PATH
+# --- Completion system ---
+# Load Zsh completion first
+autoload -Uz compinit
+compinit
 
-autoload -Uz compinit && compinit
-fpath=(/opt/homebrew/share/zsh/site-functions \\$fpath)
+# Load bash-style completion ONLY for tools that require it (terraform)
+autoload -U +X bashcompinit
+bashcompinit
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# --- Completion paths ---
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+
+# Terraform completion
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
