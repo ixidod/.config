@@ -1,5 +1,15 @@
 local cmp = require 'cmp'
+local ok_luasnip, luasnip = pcall(require, 'luasnip')
+
 cmp.setup {
+  -- Allow snippet-capable LSPs to expand through LuaSnip.
+  snippet = {
+    expand = function(args)
+      if ok_luasnip then
+        luasnip.lsp_expand(args.body)
+      end
+    end,
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-Space>'] = cmp.mapping.complete(), -- Trigger completion
     ['<C-e>'] = cmp.mapping.abort(), -- Close completion menu

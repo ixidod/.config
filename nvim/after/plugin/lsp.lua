@@ -124,6 +124,16 @@ vim.lsp.config['html'] = with_defaults('html', {
   },
 })
 
+vim.lsp.config['sqls'] = with_defaults('sqls', {
+  capabilities = capabilities,
+  cmd = { 'sqls' },
+  filetypes = { 'sql' },
+  root_dir = function(fname)
+    local root = vim.fs.find({ '.sqls.yml', '.git' }, { path = fname, upward = true })[1]
+    return root and vim.fs.dirname(root) or vim.loop.cwd()
+  end,
+})
+
 -- ---- Start the right server when a buffer with a matching filetype opens
 
 local ft_to_server = {
@@ -137,6 +147,7 @@ local ft_to_server = {
   helm = 'helm_ls',
   html = 'html',
   python = 'pyright',
+  sql = 'sqls',
 }
 
 vim.api.nvim_create_autocmd('FileType', {
