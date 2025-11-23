@@ -1,12 +1,15 @@
-nvim/spell/
-argocd/
-htop/
-mpv 
-gh
-gcloud
-zsh/.zsh_history
-zsh/.zsh_sessions
+# macOS noise
+.DS_Store
+
+# Vim/Neovim swap and backup files
+*.swp
+*.swo
+*.un~
+
+# Zsh runtime artifacts (keep configs, ignore caches/history)
 zsh/.zcompdump
-zsh/.zcompcache
-containers/
-glab-cli
+zsh/.zcompcache/
+zsh/.zsh_history
+zsh/.zsh_history.*
+zsh/.zsh_sessions/
+
