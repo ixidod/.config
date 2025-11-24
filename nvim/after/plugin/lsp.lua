@@ -47,7 +47,6 @@ local function configure_server(name, overrides)
 end
 
 -- ---- Per-server configs (new style)
-
 configure_server('yamlls', {
   capabilities = capabilities,
   filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values', 'yml' },
@@ -126,7 +125,6 @@ configure_server('helm_ls', {
 
 configure_server('html', {
   capabilities = capabilities,
-  filetypes = { 'html' },
   settings = {
     html = {
       format = { enable = true },
@@ -142,6 +140,11 @@ configure_server('sqls', {
   cmd = { 'sqls' },
   filetypes = { 'sql', 'mysql' },
   root_markers = { 'config.yml', 'config.yaml', 'sqls.yml' },
+  settings = {
+    sqls = {
+      connections = {},
+    },
+  },
 })
 
 -- ---- Start the right server when a buffer with a matching filetype opens

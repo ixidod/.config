@@ -14,6 +14,7 @@ bindkey -v
 # --- Aliases ---
 alias vi='nvim'
 alias snowsql="/Applications/SnowSQL.app/Contents/MacOS/snowsql"
+alias vi-config='cd ~/.config/nvim/after/plugin && ls -a'
 
 # ---Update all plugin Git repos---
 alias nvim-update='for d in $HOME/.local/share/nvim/site/pack/plugins/start/*/.git; do (cd "${d%/.git}" && echo "Updating $(basename "$PWD")" && git pull --ff-only); done'
