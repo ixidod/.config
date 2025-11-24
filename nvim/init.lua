@@ -11,6 +11,12 @@ vim.opt.ignorecase = true
 
 vim.g.mapleader = ' '
 
+-- Keep netrw minimal: no banner and tree-style directory listing without auto-splits.
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+vim.g.netrw_browse_split = 0
+vim.g.netrw_winsize = 25
+
 vim.pack.add {
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
   { src = 'https://github.com/fatih/vim-go' },
