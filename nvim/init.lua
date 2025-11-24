@@ -9,6 +9,8 @@ vim.opt.expandtab = true
 vim.opt.completeopt = { 'menuone', 'noselect' }
 vim.opt.ignorecase = true
 
+vim.g.mapleader = ' '
+
 vim.pack.add{
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/fatih/vim-go' },
@@ -25,6 +27,8 @@ vim.cmd('colorscheme rose-pine')
 vim.lsp.enable('pyright')
 vim.lsp.enable('sqls')
 vim.lsp.enable('gopls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('yamlls')
 
 local function setup_auto_completion(bufnr)
   local group = vim.api.nvim_create_augroup(
@@ -54,24 +58,46 @@ local function setup_auto_completion(bufnr)
   })
 end
 
+local function format_on_save(bufnr)
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = vim.api.nvim_create_augroup(
+      string.format('nvim_lsp_format_%d', bufnr),
+      { clear = true }
+    ),
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format({ bufnr = bufnr, async = false })
+    end,
+  })
+end
+
 -- Wire up built-in LSP completion.
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     vim.bo[event.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if not client or not client.server_capabilities.completionProvider then
+    if not client then
       return
     end
 
-    vim.lsp.completion.enable(true, client.id, event.buf)
-    setup_auto_completion(event.buf)
+    if vim.tbl_contains({ 'sql', 'yaml', 'yml' }, vim.bo[event.buf].filetype) then
+      format_on_save(event.buf)
+    end
+
+    if client.server_capabilities.completionProvider then
+      vim.lsp.completion.enable(true, client.id, event.buf)
+      setup_auto_completion(event.buf)
+    end
   end,
 })
 
 vim.keymap.set('i', '<C-Space>', function()
   vim.lsp.completion.get()
 end, { desc = 'Trigger LSP completion' })
+vim.keymap.set('n', '<leader>e', function()
+  vim.diagnostic.open_float()
+end, { desc = 'Show diagnostics under cursor' })
 
 local function tab_complete(fallback)
   if vim.fn.pumvisible() == 1 then
