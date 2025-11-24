@@ -6,6 +6,7 @@ eval "$(pyenv virtualenv-init -)"
 
 # --- NO CASE ===
 setopt NO_CASE_GLOB
+setopt PROMPT_SUBST
 
 # --- Editor / Keybindings ---
 export EDITOR=nvim
@@ -44,3 +45,14 @@ bashcompinit
 
 # Terraform completion
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+# --- Git prompt via vcs_info ---
+autoload -Uz vcs_info
+precmd_functions+=(vcs_info)
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git:*' formats '(%b%u%c) '
+zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c) '
+
+PROMPT='%n@%m %~ ${vcs_info_msg_0_}%# '

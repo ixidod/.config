@@ -1,8 +1,24 @@
 {
   "plugins": {
+    "everforest": {
+      "rev": "484dd560dccb2d2842685c441ad2b54a54ffef1b",
+      "src": "https://github.com/sainnhe/everforest"
+    },
+    "neovim": {
+      "rev": "cf2a288696b03d0934da713d66c6d71557b5c997",
+      "src": "https://github.com/rose-pine/neovim"
+    },
     "nvim-lspconfig": {
       "rev": "30a2b191bccf541ce1797946324c9329e90ec448",
       "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "sqls.nvim": {
+      "rev": "bfb7b4090268f6163c408577070da4cc9d7450fd",
+      "src": "https://github.com/nanotee/sqls.nvim"
+    },
+    "vim-go": {
+      "rev": "dc07b9082fecd47f8ebef5f2684758e570f66377",
+      "src": "https://github.com/fatih/vim-go"
     }
   }
 }

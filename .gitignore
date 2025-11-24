@@ -5,6 +5,8 @@
 *.swp
 *.swo
 *.un~
+nvim/.nvimlog
+nvim/README.md
 
 # Zsh runtime artifacts (keep configs, ignore caches/history)
 zsh/.zcompdump
