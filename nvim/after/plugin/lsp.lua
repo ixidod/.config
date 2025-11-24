@@ -34,10 +34,23 @@ local function with_defaults(name, overrides)
   return vim.tbl_deep_extend('force', base, overrides or {})
 end
 
+local ft_to_server = {}
+
+local function configure_server(name, overrides)
+  local config = with_defaults(name, overrides)
+  vim.lsp.config[name] = config
+  if config.filetypes then
+    for _, ft in ipairs(config.filetypes) do
+      ft_to_server[ft] = name
+    end
+  end
+end
+
 -- ---- Per-server configs (new style)
 
-vim.lsp.config['yamlls'] = with_defaults('yamlls', {
+configure_server('yamlls', {
   capabilities = capabilities,
+  filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values', 'yml' },
   settings = {
     yaml = {
       schemaStore = { enable = true },
@@ -54,7 +67,7 @@ vim.lsp.config['yamlls'] = with_defaults('yamlls', {
   },
 })
 
-vim.lsp.config['pyright'] = with_defaults('pyright', {
+configure_server('pyright', {
   capabilities = capabilities,
   settings = {
     python = {
@@ -77,11 +90,11 @@ vim.lsp.config['pyright'] = with_defaults('pyright', {
   },
 })
 
-vim.lsp.config['gopls'] = with_defaults('gopls', {
+configure_server('gopls', {
   capabilities = capabilities,
 })
 
-vim.lsp.config['lua_ls'] = with_defaults('lua_ls', {
+configure_server('lua_ls', {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -93,9 +106,9 @@ vim.lsp.config['lua_ls'] = with_defaults('lua_ls', {
   },
 })
 
-vim.lsp.config['terraformls'] = with_defaults('terraformls', {
+configure_server('terraformls', {
   capabilities = capabilities,
-  filetypes = { 'terraform', 'tf', 'hcl' },
+  filetypes = { 'terraform', 'terraform-vars', 'tf', 'hcl' },
   settings = {
     terraform = {
       languageServer = {
@@ -107,11 +120,11 @@ vim.lsp.config['terraformls'] = with_defaults('terraformls', {
   },
 })
 
-vim.lsp.config['helm_ls'] = with_defaults('helm_ls', {
+configure_server('helm_ls', {
   capabilities = capabilities,
 })
 
-vim.lsp.config['html'] = with_defaults('html', {
+configure_server('html', {
   capabilities = capabilities,
   filetypes = { 'html' },
   settings = {
@@ -124,32 +137,14 @@ vim.lsp.config['html'] = with_defaults('html', {
   },
 })
 
-vim.lsp.config['sqls'] = with_defaults('sqls', {
+configure_server('sqls', {
   capabilities = capabilities,
   cmd = { 'sqls' },
-  filetypes = { 'sql' },
-  root_dir = function(fname)
-    local root = vim.fs.find({ '.sqls.yml', '.git' }, { path = fname, upward = true })[1]
-    return root and vim.fs.dirname(root) or vim.loop.cwd()
-  end,
+  filetypes = { 'sql', 'mysql' },
+  root_markers = { 'config.yml', 'config.yaml', 'sqls.yml' },
 })
 
 -- ---- Start the right server when a buffer with a matching filetype opens
-
-local ft_to_server = {
-  yaml = 'yamlls',
-  yml = 'yamlls',
-  go = 'gopls',
-  lua = 'lua_ls',
-  terraform = 'terraformls',
-  tf = 'terraformls',
-  hcl = 'terraformls',
-  helm = 'helm_ls',
-  html = 'html',
-  python = 'pyright',
-  sql = 'sqls',
-}
-
 vim.api.nvim_create_autocmd('FileType', {
   pattern = vim.tbl_keys(ft_to_server),
   callback = function(args)

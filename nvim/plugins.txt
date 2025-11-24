@@ -9,6 +9,7 @@ git clone https://github.com/windwp/nvim-autopairs
 git clone https://github.com/alvan/vim-closetag
 git clone https://github.com/rose-pine/neovim
 git clone https://github.com/neovim/nvim-lspconfig
+git clone https://github.com/nanotee/sqls.nvim
 git clone https://github.com/hrsh7th/nvim-cmp
 git clone https://github.com/hrsh7th/cmp-nvim-lsp
 git clone https://github.com/hrsh7th/cmp-buffer
