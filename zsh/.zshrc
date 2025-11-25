@@ -1,5 +1,3 @@
-# vim: ft=zsh
-
 # --- PYTHON ---
 export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 
@@ -26,9 +24,6 @@ bindkey -v
 
 # --- Aliases ---
 alias vi='nvim'
-
-# ---Update all plugin Git repos---
-alias nvim-update='for d in $HOME/.local/share/nvim/site/pack/plugins/start/*/.git; do (cd "${d%/.git}" && echo "Updating $(basename "$PWD")" && git pull --ff-only); done'
 
 # --- PATH ---
 export PATH="/opt/homebrew/bin:$PATH"
