@@ -60,6 +60,7 @@ pcall(telescope.load_extension, 'fzf')
 vim.lsp.config('lua_ls', {
   -- Explicit command keeps the server discoverable when vim.lsp.enable() spawns it.
   cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
   root_dir = function(bufnr, on_dir)
     local root = vim.fs.root(
       vim.api.nvim_buf_get_name(bufnr),

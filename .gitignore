@@ -5,6 +5,7 @@
 *.swp
 *.swo
 *.un~
+.nvimlog
 nvim/.nvimlog
 nvim/README.md
 
