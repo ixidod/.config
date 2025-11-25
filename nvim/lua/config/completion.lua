@@ -1,7 +1,7 @@
 local M = {}
 
 local function setup_auto_completion(bufnr)
-  local group = vim.api.nvim_create_augroup(
+   local group = vim.api.nvim_create_augroup(
     string.format('nvim_lsp_completion_auto_%d', bufnr),
     { clear = true }
   )
@@ -112,10 +112,10 @@ function M.setup()
         })
       elseif ft == 'python' then
         local fallback
-        local ok, python_config = pcall(require, 'config.languages.python')
-        if ok and type(python_config.format_with_black) == 'function' then
+        local ok, python_formatter = pcall(require, 'config.formatters.python')
+        if ok and type(python_formatter.format_with_black) == 'function' then
           fallback = function(bufnr)
-            python_config.format_with_black(bufnr)
+            python_formatter.format_with_black(bufnr)
           end
         end
         format_on_save(event.buf, {
