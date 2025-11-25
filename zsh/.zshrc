@@ -43,13 +43,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 source <(fzf --zsh)
 
 # --- Completion paths ---
-ZSH_COMPLETION_DIR="$HOME/.config/zsh/completions"
-mkdir -p "$ZSH_COMPLETION_DIR"
+fpath=("$HOME/.config/zsh/completion" $fpath)
 
 # --- Completion system ---
 autoload -Uz compinit
 compinit
-zstyle ':completion:*' menu select
 
 # Load bash-style completion ONLY for tools that require it (terraform)
 autoload -U +X bashcompinit

@@ -1,0 +1,8 @@
+#compdef snow
+
+__snow_completion() {
+  eval "$(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" __C_COMPLETE=complete_zsh snow)"
+}
+
+compdef __snow_completion snow
+
