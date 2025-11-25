@@ -1,6 +1,6 @@
 vim.cmd('syntax on')
 vim.cmd('filetype plugin indent on')
-vim.cmd('colorscheme rose-pine')
+vim.cmd('colorscheme ixidod')
 
 local opt            = vim.opt
 local g              = vim.g
