@@ -1,5 +1,3 @@
-print("init.lua loaded successfully!")
-
 vim.cmd('syntax on')
 vim.cmd('filetype plugin indent on')
 vim.cmd('colorscheme ixidod_min')
@@ -112,11 +110,6 @@ vim.lsp.config("*", {
   capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
---------------------------------------------------------
--- Servers (Quickstart style)
---------------------------------------------------------
-
--- Python
 vim.lsp.config("pyright", {
   cmd          = { "pyright-langserver", "--stdio" },
   filetypes    = { "python" },
