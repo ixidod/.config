@@ -1,15 +1,11 @@
-# macOS noise
 .DS_Store
-
-# Vim/Neovim swap and backup files
+gh/
 *.swp
 *.swo
 *.un~
 .nvimlog
 nvim/.nvimlog
 nvim/README.md
-
-# Zsh runtime artifacts (keep configs, ignore caches/history)
 zsh/.zcompdump
 zsh/.zcompcache/
 zsh/.zsh_history
