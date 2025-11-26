@@ -1,6 +1,3 @@
--- ~/.config/nvim/colors/ixidod_min.lua
--- ultra-minimal colour scheme: terminal defaults everywhere
-
 local api = vim.api
 
 vim.cmd('highlight clear')
@@ -14,10 +11,6 @@ vim.g.colors_name = 'ixidod_min'
 local function hi(group, opts)
   api.nvim_set_hl(0, group, opts or {})
 end
-
------------------------------------------------------------------------
--- Base UI: everything plain, no reverse, no colours
------------------------------------------------------------------------
 
 hi('Normal',        {})
 hi('NormalFloat',   {})
@@ -35,29 +28,18 @@ hi('TabLineSel',    {})
 hi('WinSeparator',  {})
 hi('VertSplit',     {})
 
--- cmdline + mode messages (so "-- INSERT --" looks like normal text)
 hi('ModeMsg',   {})
 hi('MsgArea',   {})
 hi('MsgSeparator', {})
 
--- no special cursorline
-hi('CursorLine', {})
 
------------------------------------------------------------------------
--- Subtle interaction cues
------------------------------------------------------------------------
-
-hi('Visual', { reverse = true })       -- selection visible but no colour
+hi('Visual', { reverse = true })       
 hi('Search', { reverse = true })
 hi('IncSearch', { reverse = true })
 hi('MatchParen', { underline = true })
 
 hi('ErrorMsg',   { underline = true })
 hi('WarningMsg', { underline = true })
-
------------------------------------------------------------------------
--- Syntax → Normal
------------------------------------------------------------------------
 
 local syntax_groups = {
   'Comment',
@@ -72,10 +54,6 @@ local syntax_groups = {
 for _, grp in ipairs(syntax_groups) do
   hi(grp, { link = 'Normal' })
 end
-
------------------------------------------------------------------------
--- Diagnostics (very minimal)
------------------------------------------------------------------------
 
 hi('DiagnosticError', { link = 'Normal' })
 hi('DiagnosticWarn',  { link = 'Normal' })

@@ -40,51 +40,32 @@ g.netrw_liststyle    = 3
 g.netrw_browse_split = 0
 g.netrw_winsize      = 25
 
---------------------------------------------------------
--- Keymaps
---------------------------------------------------------
-
 local map            = vim.keymap.set
 local kopt           = { noremap = true, silent = true }
 
--- Basic movement / quality of life
 map('n', '<leader>w', ':write<CR>', kopt)
 map('n', '<leader>q', ':quit<CR>', kopt)
 
--- Clear search highlight
 map('n', '<leader>h', ':nohlsearch<CR>', kopt)
 
--- Netrw in current directory
 map('n', '<leader>e', ':Ex<CR>', kopt)
 
--- Window navigation
 map('n', '<C-h>', '<C-w>h', kopt)
 map('n', '<C-j>', '<C-w>j', kopt)
 map('n', '<C-k>', '<C-w>k', kopt)
 map('n', '<C-l>', '<C-w>l', kopt)
 
--- Keep selection when indenting in visual mode
 map('v', '<', '<gv', kopt)
 map('v', '>', '>gv', kopt)
 
--- Completion trigger: Ctrl-Space
 map('i', '<C-Space>', function()
   return vim.fn.pumvisible() == 1 and '<C-n>' or '<C-x><C-o>'
 end, { expr = true })
-
---------------------------------------------------------
--- Diagnostics keymaps (built-in)
---------------------------------------------------------
 
 map('n', '[d', vim.diagnostic.goto_prev, kopt)
 map('n', ']d', vim.diagnostic.goto_next, kopt)
 map('n', '<leader>d', vim.diagnostic.open_float, kopt)
 map('n', '<leader>ld', vim.diagnostic.setloclist, kopt)
-
-
---------------------------------------------------------
--- Global LSP defaults (official Quickstart style)
---------------------------------------------------------
 
 local function on_attach(client, bufnr)
   local map = vim.keymap.set
