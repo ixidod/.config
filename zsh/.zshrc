@@ -31,3 +31,8 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git:*' formats '(%b%u%c) '
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c) '
 PROMPT='%n@%m %~ ${vcs_info_msg_0_}%# '
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/iota/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions

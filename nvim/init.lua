@@ -9,6 +9,8 @@ local g = vim.g
 
 opt.modelines = 0
 
+opt.timeoutlen = 4000
+
 opt.hlsearch = false
 opt.incsearch = true
 opt.ignorecase = true
