@@ -5,4 +5,3 @@ __snow_completion() {
 }
 
 compdef __snow_completion snow
-

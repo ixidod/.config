@@ -12,7 +12,6 @@ alias vi='nvim'
 export PATH="/opt/homebrew/bin:$PATH"
 export GOPATH="$HOME/.go"
 export PATH="$GOPATH/bin:$PATH"
-export PATH="/Applications/SnowflakeCLI.app/Contents/MacOS/:$PATH"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath=("$HOME/.config/zsh/completion" $fpath)
