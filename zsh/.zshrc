@@ -1,5 +1,7 @@
 setopt PROMPT_SUBST
 
+export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
 export EDITOR=nvim
 bindkey -v
 
