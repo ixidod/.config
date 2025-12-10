@@ -5,10 +5,13 @@ bindkey -v
 
 alias vi='nvim'
 
+fpath=("$HOME/.config/zsh/completion" $fpath)
+
 autoload -Uz compinit
 compinit
 autoload -U +X bashcompinit
 bashcompinit
+
 
 autoload -Uz vcs_info
 precmd_functions+=(vcs_info)
