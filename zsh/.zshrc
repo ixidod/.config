@@ -1,6 +1,9 @@
 setopt PROMPT_SUBST
 
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+
 export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$HOME/.npm-global/bin:$PATH"
 
 export EDITOR=nvim
 bindkey -v
