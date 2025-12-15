@@ -1,6 +1,6 @@
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
-vim.cmd("colorscheme ixidod_min")
+vim.cmd("colorscheme ixidod")
 
 vim.api.nvim_set_hl(0, "Directory", { link = "Normal" })
 
@@ -9,7 +9,7 @@ local g = vim.g
 
 opt.modelines = 0
 
-opt.timeoutlen = 4000
+opt.timeoutlen = 4000  -- Note: This is quite long (4 seconds). Default is 1000ms
 
 opt.hlsearch = false
 opt.incsearch = true

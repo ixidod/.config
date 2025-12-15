@@ -15,7 +15,7 @@ local p = {
 
 vim.cmd("highlight clear")
 vim.o.termguicolors = true
-vim.g.colors_name = "rose-pine"
+vim.g.colors_name = "ixidod"
 
 local function hi(group, opts)
   vim.api.nvim_set_hl(0, group, opts)
@@ -50,3 +50,57 @@ hi("DiagnosticUnderlineError", { sp = p.love, underline = true })
 hi("DiagnosticUnderlineWarn", { sp = p.gold, underline = true })
 hi("DiagnosticUnderlineInfo", { sp = p.foam, underline = true })
 hi("DiagnosticUnderlineHint", { sp = p.iris, underline = true })
+
+-- TreeSitter
+hi("@variable", { fg = p.text })
+hi("@variable.builtin", { fg = p.love })
+hi("@variable.parameter", { fg = p.iris })
+hi("@variable.member", { fg = p.foam })
+
+hi("@constant", { fg = p.rose })
+hi("@constant.builtin", { fg = p.rose })
+hi("@constant.macro", { fg = p.rose })
+
+hi("@string", { fg = p.gold })
+hi("@string.escape", { fg = p.pine })
+hi("@string.special", { fg = p.rose })
+
+hi("@character", { fg = p.gold })
+hi("@number", { fg = p.rose })
+hi("@boolean", { fg = p.rose })
+hi("@float", { fg = p.rose })
+
+hi("@function", { fg = p.foam })
+hi("@function.builtin", { fg = p.love })
+hi("@function.macro", { fg = p.foam })
+hi("@function.method", { fg = p.foam })
+
+hi("@constructor", { fg = p.foam })
+hi("@keyword", { fg = p.iris })
+hi("@keyword.function", { fg = p.iris })
+hi("@keyword.operator", { fg = p.iris })
+hi("@keyword.return", { fg = p.iris })
+hi("@keyword.conditional", { fg = p.iris })
+hi("@keyword.repeat", { fg = p.iris })
+
+hi("@operator", { fg = p.subtle })
+hi("@punctuation.delimiter", { fg = p.subtle })
+hi("@punctuation.bracket", { fg = p.subtle })
+hi("@punctuation.special", { fg = p.love })
+
+hi("@type", { fg = p.pine })
+hi("@type.builtin", { fg = p.pine })
+hi("@type.qualifier", { fg = p.iris })
+
+hi("@property", { fg = p.foam })
+hi("@field", { fg = p.foam })
+
+hi("@comment", { fg = p.muted, italic = true })
+hi("@comment.error", { fg = p.love })
+hi("@comment.warning", { fg = p.gold })
+hi("@comment.todo", { fg = p.gold })
+hi("@comment.note", { fg = p.foam })
+
+hi("@tag", { fg = p.iris })
+hi("@tag.attribute", { fg = p.foam })
+hi("@tag.delimiter", { fg = p.subtle })
