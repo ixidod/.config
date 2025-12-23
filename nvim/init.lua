@@ -1,6 +1,6 @@
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
-vim.cmd("colorscheme ixidod")
+vim.cmd("colorscheme hokusai")
 
 vim.api.nvim_set_hl(0, "Directory", { link = "Normal" })
 
