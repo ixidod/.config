@@ -9,7 +9,7 @@ local g = vim.g
 
 opt.modelines = 0
 
-opt.timeoutlen = 4000  -- Note: This is quite long (4 seconds). Default is 1000ms
+opt.timeoutlen = 4000  
 
 opt.hlsearch = false
 opt.incsearch = true

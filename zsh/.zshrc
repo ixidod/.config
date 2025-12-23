@@ -5,6 +5,7 @@ bindkey -v
 
 alias vi='nvim'
 
+export GOPATH="$HOME/.go"
 export PATH="$HOME/.local/bin:$HOME/.go/bin:$HOME/.npm-global/bin:$PATH"
 
 fpath=("$HOME/.config/zsh/completion" $fpath)
@@ -14,10 +15,7 @@ compinit
 autoload -U +X bashcompinit
 bashcompinit
 
+complete -o nospace -C /Users/ixidod/.local/bin/terraform terraform
 autoload -Uz vcs_info
-precmd_functions+=(vcs_info)
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '(%b%u%c) '
-zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c) '
-PROMPT='%n@%m %~ ${vcs_info_msg_0_}%# '
+
+PROMPT='%n@%m %~ %# '
