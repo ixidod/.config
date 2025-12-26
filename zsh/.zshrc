@@ -11,5 +11,8 @@ fpath=("$HOME/.config/zsh/completion" $fpath)
 
 autoload -Uz compinit
 compinit
+autoload -U +X bashcompinit
+bashcompinit
+
 
 PROMPT='%n@%m %~ %# '
