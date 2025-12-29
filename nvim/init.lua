@@ -1,9 +1,7 @@
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
 
--- Force ANSI 16-color mode for compatibility with screen, tmux, macOS Terminal
 vim.o.termguicolors = false
-vim.o.t_Co = 16
 
 vim.cmd("colorscheme hokusai")
 

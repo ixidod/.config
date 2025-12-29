@@ -5,7 +5,7 @@ bindkey -v
 
 alias vi='nvim'
 
-export PATH="$HOME/.local/bin:$HOME/.go/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
