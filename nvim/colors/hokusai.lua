@@ -28,35 +28,32 @@ local p = {
   subtle = "#7a96b3",         -- Subtle blue-gray
 }
 
--- 256-color fallbacks for screen/terminals without true color
+-- ANSI 16-color fallbacks for maximum compatibility (screen/macOS Terminal)
+-- Colors 0-15: Black, Red, Green, Yellow, Blue, Magenta, Cyan, White
+--              and their bright variants (8-15)
 local c = {
-  wave_deep = 234,
-  wave_base = 235,
-  wave_surf = 237,
-  foam = 152,
-  foam_light = 195,
-  foam_bright = 231,
-  fuji = 187,
-  fuji_peak = 230,
-  sunrise = 215,
-  indigo = 67,
-  sky_blue = 74,
-  teal = 36,
-  coral = 210,
-  muted = 67,
-  subtle = 103,
+  wave_deep = 0,      -- Black
+  wave_base = 0,      -- Black
+  wave_surf = 8,      -- BrightBlack (Gray)
+  foam = 14,          -- BrightCyan
+  foam_light = 15,    -- BrightWhite
+  foam_bright = 15,   -- BrightWhite
+  fuji = 7,           -- White
+  fuji_peak = 15,     -- BrightWhite
+  sunrise = 11,       -- BrightYellow
+  indigo = 12,        -- BrightBlue
+  sky_blue = 14,      -- BrightCyan
+  teal = 6,           -- Cyan
+  coral = 9,          -- BrightRed
+  muted = 8,          -- BrightBlack (Gray)
+  subtle = 8,         -- BrightBlack (Gray)
 }
 
 vim.cmd("highlight clear")
 
--- Detect terminal capabilities - macOS Terminal.app doesn't support true colors well
-local term = vim.env.TERM or ""
-local term_program = vim.env.TERM_PROGRAM or ""
-if term:match("screen") or term_program == "Apple_Terminal" then
-  vim.o.termguicolors = false
-else
-  vim.o.termguicolors = true
-end
+-- Force ANSI 16-color mode for maximum compatibility
+-- This ensures the color scheme works in all environments (screen, tmux, macOS Terminal, etc.)
+vim.o.termguicolors = false
 
 vim.g.colors_name = "hokusai"
 
