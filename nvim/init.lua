@@ -1,9 +1,8 @@
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
-
 vim.o.termguicolors = false
 
-vim.cmd("colorscheme hokusai")
+vim.cmd("colorscheme quiet")
 
 local opt = vim.opt
 local g = vim.g
