@@ -4,8 +4,8 @@ export EDITOR=nvim
 bindkey -v
 
 alias vi='nvim'
-
-export PATH="$HOME/.local/bin:$PATH"
+export GOPATH="$HOME/.go"
+export PATH="/usr/local/go/bin:$HOME/.local/bin:$HOME/.go/bin:$PATH"
 
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
