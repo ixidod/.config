@@ -1,5 +1,5 @@
--- Nord colorscheme for 256-color terminals
--- https://www.nordtheme.com
+-- Minimalist Nord colorscheme
+-- For xterm-256color in GNU Screen (no GUI/termguicolors)
 
 vim.cmd("hi clear")
 if vim.fn.exists("syntax_on") then
@@ -7,243 +7,228 @@ if vim.fn.exists("syntax_on") then
 end
 vim.g.colors_name = "nord"
 vim.o.background = "dark"
+vim.o.termguicolors = false
 
--- Nord palette (256-color approximations)
--- Polar Night: 236, 237, 238, 240
--- Snow Storm:  188, 255, 255
--- Frost:       109, 110, 109, 67
--- Aurora:      131 (red), 173 (orange), 222 (yellow), 144 (green), 139 (purple)
+-- 256-color palette (Nord-ish)
+local c = {
+  bg      = 236,   -- dark gray-blue
+  bg1     = 238,   -- slightly lighter
+  bg2     = 239,   -- even lighter
+  fg      = 253,   -- light gray
+  fgdim   = 60,    -- muted gray-blue
+  none    = "NONE",
+}
 
 local hi = function(group, opts)
-  local cmd = "hi " .. group
-  if opts.fg then cmd = cmd .. " ctermfg=" .. opts.fg end
-  if opts.bg then cmd = cmd .. " ctermbg=" .. opts.bg end
-  if opts.attr then cmd = cmd .. " cterm=" .. opts.attr end
-  vim.cmd(cmd)
+  vim.api.nvim_set_hl(0, group, opts)
 end
 
 local link = function(from, to)
-  vim.cmd("hi! link " .. from .. " " .. to)
+  vim.api.nvim_set_hl(0, from, { link = to })
 end
 
 -- Editor
-hi("Normal",       { fg = 188, bg = 236 })
-hi("NormalFloat",  { fg = 188, bg = 237 })
-hi("FloatBorder",  { fg = 110, bg = 237 })
-hi("FloatTitle",   { fg = 110, bg = 237, attr = "bold" })
-hi("Cursor",       { fg = 236, bg = 188 })
-hi("CursorLine",   { bg = 237 })
-hi("CursorColumn", { bg = 237 })
-hi("CursorLineNr", { fg = 188, attr = "bold" })
-hi("LineNr",       { fg = 240 })
-hi("SignColumn",   { fg = 237, bg = 236 })
-hi("ColorColumn",  { bg = 237 })
-hi("VertSplit",    { fg = 238, bg = 236 })
-hi("WinSeparator", { fg = 238, bg = 236 })
+hi("Normal",       { ctermfg = c.fg, ctermbg = c.none })
+hi("NormalFloat",  { ctermfg = c.fg, ctermbg = c.bg1 })
+hi("FloatBorder",  { ctermfg = c.fgdim, ctermbg = c.bg1 })
+hi("FloatTitle",   { ctermfg = c.fg, ctermbg = c.bg1, bold = true })
+hi("Cursor",       { ctermfg = c.bg, ctermbg = c.fg })
+hi("CursorLine",   { ctermbg = c.bg1 })
+hi("CursorColumn", { ctermbg = c.bg1 })
+hi("CursorLineNr", { ctermfg = c.fg, bold = true })
+hi("LineNr",       { ctermfg = c.fgdim })
+hi("SignColumn",   { ctermbg = c.none })
+hi("ColorColumn",  { ctermbg = c.bg1 })
+hi("VertSplit",    { ctermfg = c.bg2 })
+hi("WinSeparator", { ctermfg = c.bg2 })
 
 -- Statusline
-hi("StatusLine",   { fg = 188, bg = 238 })
-hi("StatusLineNC", { fg = 240, bg = 237 })
+hi("StatusLine",   { ctermfg = c.fg, ctermbg = c.bg2 })
+hi("StatusLineNC", { ctermfg = c.fgdim, ctermbg = c.bg1 })
 
 -- Tabline
-hi("TabLine",     { fg = 188, bg = 237 })
-hi("TabLineFill", { bg = 237 })
-hi("TabLineSel",  { fg = 188, bg = 238, attr = "bold" })
+hi("TabLine",     { ctermfg = c.fg, ctermbg = c.bg1 })
+hi("TabLineFill", { ctermbg = c.bg1 })
+hi("TabLineSel",  { ctermfg = c.fg, ctermbg = c.bg2, bold = true })
 
--- Pmenu (completion/popup menu)
-hi("Pmenu",          { fg = 188, bg = 237 })
-hi("PmenuSel",       { fg = 236, bg = 110 })
-hi("PmenuSbar",      { bg = 238 })
-hi("PmenuThumb",     { bg = 110 })
-hi("PmenuKind",      { fg = 139, bg = 237 })
-hi("PmenuKindSel",   { fg = 236, bg = 110 })
-hi("PmenuExtra",     { fg = 240, bg = 237 })
-hi("PmenuExtraSel",  { fg = 237, bg = 110 })
+-- Pmenu
+hi("Pmenu",      { ctermfg = c.fg, ctermbg = c.bg1 })
+hi("PmenuSel",   { ctermfg = c.bg, ctermbg = c.fg })
+hi("PmenuSbar",  { ctermbg = c.bg2 })
+hi("PmenuThumb", { ctermbg = c.fg })
 
 -- Search
-hi("Search",     { fg = 236, bg = 222 })
-hi("IncSearch",  { fg = 236, bg = 173 })
-hi("CurSearch",  { fg = 236, bg = 173 })
-hi("Substitute", { fg = 236, bg = 131 })
+hi("Search",     { ctermfg = c.bg, ctermbg = c.fg })
+hi("IncSearch",  { ctermfg = c.bg, ctermbg = c.fg, bold = true })
+hi("CurSearch",  { ctermfg = c.bg, ctermbg = c.fg, bold = true })
+hi("Substitute", { ctermfg = c.bg, ctermbg = c.fg })
 
 -- Visual
-hi("Visual",    { bg = 238 })
-hi("VisualNOS", { bg = 238 })
+hi("Visual",    { ctermbg = c.bg2 })
+hi("VisualNOS", { ctermbg = c.bg2 })
 
 -- Folding
-hi("Folded",     { fg = 240, bg = 237 })
-hi("FoldColumn", { fg = 240, bg = 236 })
+hi("Folded",     { ctermfg = c.fgdim, ctermbg = c.bg1 })
+hi("FoldColumn", { ctermfg = c.fgdim })
 
 -- Diff
-hi("DiffAdd",    { fg = 144, bg = 237 })
-hi("DiffChange", { fg = 222, bg = 237 })
-hi("DiffDelete", { fg = 131, bg = 237 })
-hi("DiffText",   { fg = 222, bg = 238 })
+hi("DiffAdd",    { ctermfg = c.fg, ctermbg = c.bg1 })
+hi("DiffChange", { ctermfg = c.fg, ctermbg = c.bg1 })
+hi("DiffDelete", { ctermfg = c.fgdim, ctermbg = c.bg1 })
+hi("DiffText",   { ctermfg = c.fg, ctermbg = c.bg2 })
 
 -- Messages
-hi("ErrorMsg",   { fg = 131, attr = "bold" })
-hi("WarningMsg", { fg = 222, attr = "bold" })
-hi("ModeMsg",    { fg = 188, attr = "bold" })
-hi("MoreMsg",    { fg = 110 })
-hi("Question",   { fg = 144 })
+hi("ErrorMsg",   { ctermfg = c.fg, bold = true })
+hi("WarningMsg", { ctermfg = c.fg, bold = true })
+hi("ModeMsg",    { ctermfg = c.fg, bold = true })
+hi("MoreMsg",    { ctermfg = c.fg })
+hi("Question",   { ctermfg = c.fg })
 
--- Spelling
-hi("SpellBad",   { fg = 131, attr = "underline" })
-hi("SpellCap",   { fg = 222, attr = "underline" })
-hi("SpellLocal", { fg = 109, attr = "underline" })
-hi("SpellRare",  { fg = 139, attr = "underline" })
+-- Spelling (underline since no undercurl in 256-color)
+hi("SpellBad",   { underline = true })
+hi("SpellCap",   { underline = true })
+hi("SpellLocal", { underline = true })
+hi("SpellRare",  { underline = true })
 
 -- Misc
-hi("Directory",  { fg = 110 })
-hi("Title",      { fg = 188, attr = "bold" })
-hi("Conceal",    { fg = 240 })
-hi("NonText",    { fg = 238 })
-hi("SpecialKey", { fg = 238 })
-hi("MatchParen", { fg = 222, bg = 238, attr = "bold" })
-hi("WildMenu",   { fg = 236, bg = 110 })
+hi("Directory",  { ctermfg = c.fg })
+hi("Title",      { ctermfg = c.fg, bold = true })
+hi("Conceal",    { ctermfg = c.fgdim })
+hi("NonText",    { ctermfg = c.bg2 })
+hi("SpecialKey", { ctermfg = c.bg2 })
+hi("MatchParen", { ctermfg = c.fg, ctermbg = c.bg2, bold = true })
+hi("WildMenu",   { ctermfg = c.bg, ctermbg = c.fg })
 
--- Syntax
-hi("Comment",   { fg = 240, attr = "italic" })
-hi("Constant",  { fg = 188 })
-hi("String",    { fg = 144 })
-hi("Character", { fg = 144 })
-hi("Number",    { fg = 139 })
-hi("Float",     { fg = 139 })
-hi("Boolean",   { fg = 109 })
+-- All syntax = same foreground (monochrome)
+hi("Comment",     { ctermfg = c.fgdim, italic = true })
+hi("Constant",    { ctermfg = c.fg })
+hi("String",      { ctermfg = c.fg })
+hi("Character",   { ctermfg = c.fg })
+hi("Number",      { ctermfg = c.fg })
+hi("Float",       { ctermfg = c.fg })
+hi("Boolean",     { ctermfg = c.fg })
+hi("Identifier",  { ctermfg = c.fg })
+hi("Function",    { ctermfg = c.fg })
+hi("Statement",   { ctermfg = c.fg })
+hi("Conditional", { ctermfg = c.fg })
+hi("Repeat",      { ctermfg = c.fg })
+hi("Label",       { ctermfg = c.fg })
+hi("Operator",    { ctermfg = c.fg })
+hi("Keyword",     { ctermfg = c.fg })
+hi("Exception",   { ctermfg = c.fg })
+hi("PreProc",     { ctermfg = c.fg })
+hi("Include",     { ctermfg = c.fg })
+hi("Define",      { ctermfg = c.fg })
+hi("Macro",       { ctermfg = c.fg })
+hi("PreCondit",   { ctermfg = c.fg })
+hi("Type",        { ctermfg = c.fg })
+hi("StorageClass",{ ctermfg = c.fg })
+hi("Structure",   { ctermfg = c.fg })
+hi("Typedef",     { ctermfg = c.fg })
+hi("Special",     { ctermfg = c.fg })
+hi("SpecialChar", { ctermfg = c.fg })
+hi("Tag",         { ctermfg = c.fg })
+hi("Delimiter",   { ctermfg = c.fg })
+hi("Debug",       { ctermfg = c.fg })
+hi("Underlined",  { ctermfg = c.fg, underline = true })
+hi("Error",       { ctermfg = c.fg, underline = true })
+hi("Todo",        { ctermfg = c.fg, bold = true })
+hi("SpecialComment", { ctermfg = c.fgdim })
 
-hi("Identifier", { fg = 188 })
-hi("Function",   { fg = 110 })
+-- Diagnostics (subtle)
+hi("DiagnosticError", { ctermfg = c.fg })
+hi("DiagnosticWarn",  { ctermfg = c.fg })
+hi("DiagnosticInfo",  { ctermfg = c.fgdim })
+hi("DiagnosticHint",  { ctermfg = c.fgdim })
+hi("DiagnosticOk",    { ctermfg = c.fg })
 
-hi("Statement",   { fg = 109 })
-hi("Conditional", { fg = 109 })
-hi("Repeat",      { fg = 109 })
-hi("Label",       { fg = 109 })
-hi("Operator",    { fg = 109 })
-hi("Keyword",     { fg = 109 })
-hi("Exception",   { fg = 109 })
+hi("DiagnosticUnderlineError", { underline = true })
+hi("DiagnosticUnderlineWarn",  { underline = true })
+hi("DiagnosticUnderlineInfo",  { underline = true })
+hi("DiagnosticUnderlineHint",  { underline = true })
 
-hi("PreProc",   { fg = 109 })
-hi("Include",   { fg = 109 })
-hi("Define",    { fg = 109 })
-hi("Macro",     { fg = 109 })
-hi("PreCondit", { fg = 109 })
-
-hi("Type",         { fg = 109 })
-hi("StorageClass", { fg = 109 })
-hi("Structure",    { fg = 109 })
-hi("Typedef",      { fg = 109 })
-
-hi("Special",        { fg = 188 })
-hi("SpecialChar",    { fg = 222 })
-hi("SpecialComment", { fg = 110, attr = "italic" })
-hi("Tag",            { fg = 188 })
-hi("Delimiter",      { fg = 188 })
-hi("Debug",          { fg = 131 })
-
-hi("Underlined", { fg = 110, attr = "underline" })
-hi("Error",      { fg = 131 })
-hi("Todo",       { fg = 222, bg = 237 })
-
--- Diagnostics
-hi("DiagnosticError", { fg = 131 })
-hi("DiagnosticWarn",  { fg = 222 })
-hi("DiagnosticInfo",  { fg = 110 })
-hi("DiagnosticHint",  { fg = 109 })
-hi("DiagnosticOk",    { fg = 144 })
-
-hi("DiagnosticUnderlineError", { attr = "underline" })
-hi("DiagnosticUnderlineWarn",  { attr = "underline" })
-hi("DiagnosticUnderlineInfo",  { attr = "underline" })
-hi("DiagnosticUnderlineHint",  { attr = "underline" })
-
-hi("DiagnosticVirtualTextError", { fg = 131, bg = 237 })
-hi("DiagnosticVirtualTextWarn",  { fg = 222, bg = 237 })
-hi("DiagnosticVirtualTextInfo",  { fg = 110, bg = 237 })
-hi("DiagnosticVirtualTextHint",  { fg = 109, bg = 237 })
-
-hi("DiagnosticFloatingError", { fg = 131 })
-hi("DiagnosticFloatingWarn",  { fg = 222 })
-hi("DiagnosticFloatingInfo",  { fg = 110 })
-hi("DiagnosticFloatingHint",  { fg = 109 })
+hi("DiagnosticVirtualTextError", { ctermfg = c.fgdim })
+hi("DiagnosticVirtualTextWarn",  { ctermfg = c.fgdim })
+hi("DiagnosticVirtualTextInfo",  { ctermfg = c.fgdim })
+hi("DiagnosticVirtualTextHint",  { ctermfg = c.fgdim })
 
 -- LSP
-hi("LspReferenceRead",  { bg = 238 })
-hi("LspReferenceText",  { bg = 238 })
-hi("LspReferenceWrite", { bg = 238 })
-hi("LspInlayHint",      { fg = 240, bg = 237 })
-hi("LspSignatureActiveParameter", { fg = 222, attr = "bold" })
+hi("LspReferenceRead",  { ctermbg = c.bg2 })
+hi("LspReferenceText",  { ctermbg = c.bg2 })
+hi("LspReferenceWrite", { ctermbg = c.bg2 })
+hi("LspInlayHint",      { ctermfg = c.fgdim })
 
--- Treesitter
+-- Treesitter - all monochrome
 link("@variable", "Identifier")
-link("@variable.builtin", "Keyword")
-hi("@variable.parameter", { fg = 188 })
-hi("@variable.member", { fg = 188 })
-
+link("@variable.builtin", "Identifier")
+link("@variable.parameter", "Identifier")
+link("@variable.member", "Identifier")
 link("@constant", "Constant")
-link("@constant.builtin", "Keyword")
-
+link("@constant.builtin", "Constant")
 link("@module", "Identifier")
 link("@label", "Label")
-
 link("@string", "String")
-hi("@string.escape", { fg = 109 })
-hi("@string.regexp", { fg = 222 })
+link("@string.escape", "String")
+link("@string.regexp", "String")
 link("@string.special.url", "Underlined")
-
 link("@character", "Character")
 link("@boolean", "Boolean")
 link("@number", "Number")
 link("@number.float", "Float")
-
 link("@type", "Type")
-hi("@type.builtin", { fg = 109 })
-
+link("@type.builtin", "Type")
 link("@attribute", "PreProc")
-hi("@property", { fg = 188 })
-
+link("@property", "Identifier")
 link("@function", "Function")
-hi("@function.builtin", { fg = 110 })
+link("@function.builtin", "Function")
 link("@function.macro", "Macro")
-hi("@function.method", { fg = 110 })
-hi("@function.method.call", { fg = 110 })
-
-hi("@constructor", { fg = 109 })
+link("@function.method", "Function")
+link("@constructor", "Function")
 link("@operator", "Operator")
-
 link("@keyword", "Keyword")
 link("@keyword.import", "Include")
 link("@keyword.return", "Keyword")
 link("@keyword.conditional", "Conditional")
 link("@keyword.repeat", "Repeat")
 link("@keyword.exception", "Exception")
-
-hi("@punctuation.delimiter", { fg = 188 })
-hi("@punctuation.bracket", { fg = 188 })
-hi("@punctuation.special", { fg = 109 })
-
+link("@punctuation.delimiter", "Delimiter")
+link("@punctuation.bracket", "Delimiter")
+link("@punctuation.special", "Delimiter")
 link("@comment", "Comment")
-hi("@comment.error", { fg = 131 })
-hi("@comment.warning", { fg = 222 })
-hi("@comment.todo", { fg = 222, bg = 237 })
-hi("@comment.note", { fg = 110 })
-
+link("@comment.error", "Comment")
+link("@comment.warning", "Comment")
+link("@comment.todo", "Todo")
+link("@comment.note", "Comment")
 link("@markup.heading", "Title")
-link("@markup.strong", "Bold")
-hi("@markup.strong", { attr = "bold" })
-link("@markup.italic", "Italic")
-hi("@markup.italic", { attr = "italic" })
+hi("@markup.strong", { ctermfg = c.fg, bold = true })
+hi("@markup.italic", { ctermfg = c.fg, italic = true })
 link("@markup.link.url", "Underlined")
-hi("@markup.list", { fg = 109 })
-
 link("@tag", "Tag")
-hi("@tag.attribute", { fg = 110 })
-hi("@tag.delimiter", { fg = 109 })
+link("@tag.attribute", "Identifier")
+link("@tag.delimiter", "Delimiter")
 
 -- Git
-hi("GitSignsAdd",    { fg = 144 })
-hi("GitSignsChange", { fg = 222 })
-hi("GitSignsDelete", { fg = 131 })
+hi("GitSignsAdd",    { ctermfg = c.fg })
+hi("GitSignsChange", { ctermfg = c.fgdim })
+hi("GitSignsDelete", { ctermfg = c.fgdim })
+hi("diffAdded",   { ctermfg = c.fg })
+hi("diffRemoved", { ctermfg = c.fgdim })
+hi("diffChanged", { ctermfg = c.fg })
 
-hi("diffAdded",   { fg = 144 })
-hi("diffRemoved", { fg = 131 })
-hi("diffChanged", { fg = 222 })
+-- LSP semantic tokens - all monochrome
+link("@lsp.type.comment", "Comment")
+link("@lsp.type.keyword", "Keyword")
+link("@lsp.type.string", "String")
+link("@lsp.type.number", "Number")
+link("@lsp.type.function", "Function")
+link("@lsp.type.variable", "Identifier")
+link("@lsp.type.type", "Type")
+link("@lsp.type.class", "Type")
+link("@lsp.type.interface", "Type")
+link("@lsp.type.enum", "Type")
+link("@lsp.type.struct", "Type")
+link("@lsp.type.property", "Identifier")
+link("@lsp.type.method", "Function")
+link("@lsp.type.parameter", "Identifier")
+link("@lsp.type.decorator", "Identifier")
+link("@lsp.type.namespace", "Identifier")
