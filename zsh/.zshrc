@@ -1,24 +1,8 @@
 bindkey -v
 alias vi='nvim'
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-export GOPATH="$HOME/.go" 
-
-typeset -U path
-path=(
-  "$HOME/usr/local/go/bin"
-  "$HOME/.local/bin"
-  "$GOPATH/bin"
-  $path
-)
-
-typeset -U fpath
+typeset -U path fpath  
+path=("$HOME/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" $path)
 fpath=("$HOME/.config/zsh/completion" $fpath)
-
-autoload -Uz compinit
-compinit
-
-autoload -Uz bashcompinit
-bashcompinit
-
+export GOPATH="$HOME/.go"
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
