@@ -29,7 +29,7 @@ opt.signcolumn = "yes"
 opt.scrolloff = 8
 opt.wrap = false
 opt.pumheight = 15
-opt.completeopt = "menuone,noselect"
+opt.completeopt = "menuone,noselect,fuzzy"
 
 opt.tabstop = 2
 opt.softtabstop = 2
@@ -45,6 +45,20 @@ g.loaded_netrwSettings = 1
 
 local map = vim.keymap.set
 local kopt = { noremap = true, silent = true }
+
+-- Completion keymaps
+map("i", "<Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
+end, { expr = true })
+map("i", "<S-Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>"
+end, { expr = true })
+map("i", "<CR>", function()
+  if vim.fn.pumvisible() == 1 and vim.fn.complete_info()["selected"] ~= -1 then
+    return "<C-y>"
+  end
+  return "<CR>"
+end, { expr = true })
 
 map("n", "<leader>bn", ":bnext<CR>", kopt)
 map("n", "<leader>bp", ":bprevious<CR>", kopt)
@@ -84,10 +98,32 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local opts = { buffer = bufnr }
 
-    -- Enable completion
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-    end
+    -- Use omnifunc for completion (works with fuzzy)
+    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+    -- Ctrl-Space triggers completion
+    map("i", "<C-Space>", "<C-x><C-o>", { buffer = bufnr })
+
+    -- Auto-trigger on .
+    map("i", ".", ".<C-x><C-o>", { buffer = bufnr })
+
+    -- Auto-trigger while typing (for local func names etc)
+    vim.api.nvim_create_autocmd("TextChangedI", {
+      buffer = bufnr,
+      callback = function()
+        if vim.fn.pumvisible() == 1 then return end
+        local col = vim.fn.col(".") - 1
+        if col < 3 then return end
+        local line = vim.fn.getline(".")
+        local before = line:sub(1, col)
+        -- Only trigger if 3+ word chars at end of what's typed
+        if before:match("%w%w%w$") and not before:match("%s$") then
+          local ok, _ = pcall(function()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), "n", false)
+          end)
+        end
+      end,
+    })
 
     -- Navigation
     map("n", "gd", vim.lsp.buf.definition, opts)

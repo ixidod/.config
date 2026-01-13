@@ -4,6 +4,9 @@ return {
   root_markers = { "go.mod", "go.work", ".git" },
   settings = {
     gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      matcher = "Fuzzy",
       analyses = {
         unusedparams = true,
         shadow = true,
