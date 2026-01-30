@@ -1,17 +1,7 @@
 /containers
-.DS_Store
-mpv/
-epr/
 gh/
-*.swp
-*.swo
-*.un~
-.nvimlog
-nvim/.nvimlog
-nvim/README.md
 zsh/.zcompdump
 zsh/.zcompcache/
 zsh/.zsh_history
 zsh/.zsh_history.*
 zsh/.zsh_sessions/
-
