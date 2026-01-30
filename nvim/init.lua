@@ -74,7 +74,9 @@ map("n", "<C-j>", "<C-w>j", kopt)
 map("n", "<C-k>", "<C-w>k", kopt)
 map("n", "<C-l>", "<C-w>l", kopt)
 
--- LSP float window borders
+
+
+-- LSP 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
   max_width = 80,
@@ -89,7 +91,6 @@ vim.diagnostic.config({
   float = { border = "rounded" },
 })
 
--- LSP
 vim.lsp.enable("go")
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -98,16 +99,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local opts = { buffer = bufnr }
 
-    -- Use omnifunc for completion (works with fuzzy)
     vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Ctrl-Space triggers completion
     map("i", "<C-Space>", "<C-x><C-o>", { buffer = bufnr })
 
-    -- Auto-trigger on .
     map("i", ".", ".<C-x><C-o>", { buffer = bufnr })
 
-    -- Auto-trigger while typing (for local func names etc)
     vim.api.nvim_create_autocmd("TextChangedI", {
       buffer = bufnr,
       callback = function()
@@ -116,7 +113,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if col < 3 then return end
         local line = vim.fn.getline(".")
         local before = line:sub(1, col)
-        -- Only trigger if 3+ word chars at end of what's typed
         if before:match("%w%w%w$") and not before:match("%s$") then
           local ok, _ = pcall(function()
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), "n", false)
@@ -125,18 +121,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end,
     })
 
-    -- Navigation
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gr", vim.lsp.buf.references, opts)
     map("n", "gi", vim.lsp.buf.implementation, opts)
     map("n", "K", vim.lsp.buf.hover, opts)
 
-    -- Actions
     map("n", "<leader>rn", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 
-    -- Diagnostics
     map("n", "[d", vim.diagnostic.goto_prev, opts)
     map("n", "]d", vim.diagnostic.goto_next, opts)
     map("n", "gl", vim.diagnostic.open_float, opts)
@@ -144,7 +137,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Format Go files with goimports on save
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
