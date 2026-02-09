@@ -36,11 +36,42 @@ g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 g.loaded_netrwSettings = 1
 
+-- GO go dolls
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
     local view = vim.fn.winsaveview()
-    vim.cmd("silent %!goimports")
+    vim.lsp.buf.format()
+    vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
     vim.fn.winrestview(view)
   end,
 })
+
+vim.lsp.config('gopls', {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git' },
+  settings = {
+    gopls = {
+      analyses = { unusedparams = true },
+      staticcheck = true,
+      completeUnimported = true,
+    },
+  },
+})
+
+vim.lsp.enable('gopls')
+vim.diagnostic.config({ virtual_text = { prefix = '' }, signs = false, underline = true })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
+  end,
+})
+
