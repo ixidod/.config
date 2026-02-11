@@ -24,7 +24,7 @@ opt.signcolumn = "yes"
 opt.scrolloff = 8
 opt.wrap = false
 opt.pumheight = 15
-opt.completeopt = "menuone,noselect,fuzzy"
+opt.completeopt = "menu,menuone,noselect,fuzzy"
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
@@ -55,7 +55,6 @@ vim.lsp.config('gopls', {
     gopls = {
       analyses = { unusedparams = true },
       staticcheck = true,
-      completeUnimported = true,
     },
   },
 })
@@ -71,7 +70,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, opts)
   end,
 })
-
