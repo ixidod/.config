@@ -1,6 +1,7 @@
 .DS_Store
 /containers
 /gh
+/mpv
 zsh/.zcompdump
 zsh/.zcompcache/
 zsh/.zsh_history
