@@ -1,8 +1,3 @@
-vim.cmd('packadd nvim-cmp')
-vim.cmd('packadd cmp-nvim-lsp')
-vim.cmd('packadd cmp-buffer')
-vim.cmd('packadd cmp-path')
-
 local cmp = require('cmp')
 
 cmp.setup({

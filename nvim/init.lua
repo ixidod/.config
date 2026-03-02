@@ -1,12 +1,10 @@
-vim.cmd("syntax on")
-vim.cmd("filetype plugin indent on")
--- vim.cmd("colorscheme rose-pine-moon")
 vim.cmd("colorscheme nord")
 
 local opt = vim.opt
 local g = vim.g
 
-opt.termguicolors = true
+opt.shortmess:append("I")
+opt.fillchars = { eob = " " }
 opt.modelines = 0
 opt.timeoutlen = 4000  
 opt.hlsearch = false
