@@ -1,7 +1,12 @@
 bindkey -v
 alias vi='nvim'
 
+export COLORTERM=truecolor
+
 typeset -U path fpath  
+
+source "$HOME/.local/share/google-cloud-sdk/path.zsh.inc"
+source "$HOME/.local/share/google-cloud-sdk/completion.zsh.inc"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

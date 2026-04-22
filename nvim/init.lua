@@ -1,8 +1,6 @@
 vim.cmd("colorscheme nord")
-
 local opt = vim.opt
 local g = vim.g
-
 opt.shortmess:append("I")
 opt.fillchars = { eob = " " }
 opt.modelines = 0
@@ -23,7 +21,7 @@ opt.signcolumn = "yes"
 opt.scrolloff = 8
 opt.wrap = false
 opt.pumheight = 15
-opt.completeopt = "menu,menuone,noselect"
+opt.completeopt = "menuone,noselect,popup"
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
@@ -31,11 +29,10 @@ opt.expandtab = true
 opt.smartindent = true
 
 g.mapleader = " "
+
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 g.loaded_netrwSettings = 1
 
 require('lsp.kb')
 require('lsp.go')
-require('lsp.sql')
-require('plugins.cmp')
