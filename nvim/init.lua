@@ -27,12 +27,11 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
-
 g.mapleader = " "
-
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 g.loaded_netrwSettings = 1
 
 require('lsp.kb')
 require('lsp.go')
+require('lsp.java')
