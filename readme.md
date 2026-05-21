@@ -8,7 +8,8 @@ Personal config tracked in `~/.config`. No install script — everything is set 
 ~/.config/
 ├── nvim/           # Neovim config (plugin-free, built-in LSP)
 ├── zsh/            # Shell config (.zshrc lives here, not ~/.zshrc)
-│   └── completion/ # Custom zsh completions
+   └── completion/ # Custom zsh completions
+
 ```
 
 ## Neovim
