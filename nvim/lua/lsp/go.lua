@@ -21,4 +21,3 @@ vim.lsp.config('gopls', {
 })
 
 vim.lsp.enable('gopls')
-vim.diagnostic.config({ virtual_text = { prefix = '' }, signs = false, underline = true })

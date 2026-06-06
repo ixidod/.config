@@ -1,0 +1,13 @@
+#compdef aws
+
+_aws() {
+  local -a completions
+  local word="${words[CURRENT]}"
+  local -x COMP_LINE="${words[*]}"
+  local -x COMP_POINT="${#COMP_LINE}"
+
+  completions=(${(f)"$(aws_completer 2>/dev/null)"})
+  compadd -- $completions
+}
+
+_aws "$@"
