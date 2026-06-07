@@ -5,10 +5,7 @@ export COLORTERM=truecolor
 typeset -U path fpath  
 
 export GOPATH="$HOME/.go"
-export DOTNET_ROOT="$HOME/.local/share/dotnet"
-
-export DOTNET_ROLL_FORWARD=Major
-path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" "$HOME/.local/share/dotnet" "$HOME/.dotnet/tools" $path)
+path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" $path)
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -35,6 +32,3 @@ git_prompt() {
 }
 setopt PROMPT_SUBST
 PROMPT='%n@%m [%1~] $(git_prompt)%# '
-
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
