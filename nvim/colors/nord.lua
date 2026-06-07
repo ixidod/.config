@@ -29,8 +29,8 @@ end
 
 -- Editor
 hi("Normal",       { ctermfg = c.fg, ctermbg = c.none })
-hi("NormalFloat",  { ctermfg = c.fg, ctermbg = c.bg1 })
-hi("FloatBorder",  { ctermfg = c.fgdim, ctermbg = c.bg1 })
+hi("NormalFloat",  { ctermfg = c.fg, ctermbg = c.bg1, fg = '#ECEFF4', bg = '#3B4252' })
+hi("FloatBorder",  { ctermfg = c.fgdim, ctermbg = c.bg1, fg = '#4C566A', bg = '#3B4252' })
 hi("FloatTitle",   { ctermfg = c.fg, ctermbg = c.bg1, bold = true })
 hi("Cursor",       { ctermfg = c.bg, ctermbg = c.fg })
 hi("CursorLine",   { ctermbg = c.bg1 })
@@ -142,6 +142,12 @@ hi("DiagnosticWarn",  { ctermfg = c.fg })
 hi("DiagnosticInfo",  { ctermfg = c.fgdim })
 hi("DiagnosticHint",  { ctermfg = c.fgdim })
 hi("DiagnosticOk",    { ctermfg = c.fg })
+
+-- Brighter diagnostic float text (nord defaults are too dim)
+hi("DiagnosticFloatingError", { fg = '#BF616A', bg = '#3B4252', bold = true })
+hi("DiagnosticFloatingWarn",  { fg = '#EBCB8B', bg = '#3B4252', bold = true })
+hi("DiagnosticFloatingInfo",  { fg = '#88C0D0', bg = '#3B4252' })
+hi("DiagnosticFloatingHint",  { fg = '#A3BE8C', bg = '#3B4252' })
 
 hi("DiagnosticUnderlineError", { underline = true })
 hi("DiagnosticUnderlineWarn",  { underline = true })

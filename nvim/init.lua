@@ -1,13 +1,5 @@
 vim.cmd("colorscheme nord")
 
--- Brighter diagnostic float text (nord defaults are too dim)
-vim.api.nvim_set_hl(0, 'NormalFloat',             { fg = '#ECEFF4', bg = '#3B4252' })
-vim.api.nvim_set_hl(0, 'DiagnosticFloatingError', { fg = '#BF616A', bg = '#3B4252', bold = true })
-vim.api.nvim_set_hl(0, 'DiagnosticFloatingWarn',  { fg = '#EBCB8B', bg = '#3B4252', bold = true })
-vim.api.nvim_set_hl(0, 'DiagnosticFloatingInfo',  { fg = '#88C0D0', bg = '#3B4252' })
-vim.api.nvim_set_hl(0, 'DiagnosticFloatingHint',  { fg = '#A3BE8C', bg = '#3B4252' })
-vim.api.nvim_set_hl(0, 'FloatBorder',             { fg = '#4C566A', bg = '#3B4252' })
-
 local opt = vim.opt
 local g = vim.g
 
@@ -47,6 +39,4 @@ g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+,\(^\|\s\s\)ntuser\.\S\+]]
 
 require('lsp.kb')
 require('lsp.go')
-require('lsp.java')
-require('lsp.csharp')
 require('lsp.terraform')
