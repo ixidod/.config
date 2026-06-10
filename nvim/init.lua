@@ -40,3 +40,4 @@ g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+,\(^\|\s\s\)ntuser\.\S\+]]
 require('lsp.kb')
 require('lsp.go')
 require('lsp.terraform')
+require('lsp.ruby')

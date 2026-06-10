@@ -8,6 +8,9 @@ export GOPATH="$HOME/.go"
 path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" $path)
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
+
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 autoload -Uz compinit

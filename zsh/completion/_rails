@@ -1,0 +1,104 @@
+#compdef rails bin/rails
+#autoload
+
+_rails_commands() {
+  local -a commands
+  commands=(
+    'generate:Generate new code (alias: g)'
+    'g:Generate new code'
+    'destroy:Remove generated code (alias: d)'
+    'd:Remove generated code'
+    'console:Start the Rails console (alias: c)'
+    'c:Start the Rails console'
+    'server:Start the Rails server (alias: s)'
+    's:Start the Rails server'
+    'new:Create a new Rails application'
+    'plugin\ new:Create a new Rails railtie or engine'
+    'runner:Run Ruby code in the context of the app (alias: r)'
+    'r:Run Ruby code in the context of the app'
+    'dbconsole:Start a console for the configured database (alias: db)'
+    'db:Start a console for the configured database'
+    'test:Run tests except system tests (alias: t)'
+    't:Run tests except system tests'
+    'test\:system:Run system tests'
+    'routes:List all defined routes'
+    'middleware:Print the Rack middleware stack'
+    'notes:Show annotated comments (TODO/FIXME/etc)'
+    'stats:Report code statistics'
+    'about:List versions of all Rails frameworks'
+    'initializers:Print all defined initializers'
+    'version:Show the Rails version'
+    'boot:Boot the application and exit'
+    'restart:Restart app by touching tmp/restart.txt'
+    'secret:Generate a cryptographically secure secret'
+    'zeitwerk\:check:Check project structure for Zeitwerk compatibility'
+    'credentials\:edit:Edit encrypted credentials'
+    'credentials\:show:Show decrypted credentials'
+    'credentials\:diff:Enroll/disenroll in decrypted credential diffs'
+    'encrypted\:edit:Edit an encrypted file'
+    'encrypted\:show:Show an encrypted file'
+    'log\:clear:Truncate log files'
+    'tmp\:clear:Clear cache, sockets and screenshots'
+    'tmp\:create:Create tmp directories'
+    'dev\:cache:Toggle development-mode caching'
+    'app\:update:Update configs from a newer Rails version'
+    'app\:template:Apply a template to the app'
+    'db\:create:Create the database'
+    'db\:drop:Drop the database'
+    'db\:migrate:Run pending migrations'
+    'db\:migrate\:status:Show migration status'
+    'db\:migrate\:redo:Roll back and re-run the last migration'
+    'db\:migrate\:up:Run a specific migration up'
+    'db\:migrate\:down:Run a specific migration down'
+    'db\:rollback:Roll back the last migration'
+    'db\:schema\:dump:Dump the database schema'
+    'db\:schema\:load:Load the database schema'
+    'db\:seed:Load seed data'
+    'db\:setup:Create database, load schema, seed'
+    'db\:prepare:Run setup or migrate as needed'
+    'db\:reset:Drop, recreate and seed the database'
+    'db\:version:Show the current schema version'
+    'assets\:precompile:Precompile assets'
+    'assets\:clean:Remove old compiled assets'
+    'assets\:clobber:Remove all compiled assets'
+    'yarn\:install:Install JavaScript dependencies via yarn'
+  )
+  _describe -t commands 'rails command' commands
+}
+
+_rails_generators() {
+  local -a generators
+  generators=(
+    application_record authentication benchmark channel controller
+    generator helper integration_test job mailbox mailer migration
+    model resource scaffold scaffold_controller script system_test task
+  )
+  _describe -t generators 'generator' generators
+}
+
+_rails() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  _arguments -C \
+    '1: :->command' \
+    '*:: :->args'
+
+  case $state in
+    command)
+      _rails_commands
+      ;;
+    args)
+      case ${line[1]} in
+        generate|g|destroy|d)
+          _rails_generators
+          ;;
+        *)
+          _files
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_rails "$@"
