@@ -1,0 +1,323 @@
+#compdef claude
+
+_claude() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '(-v --version)'{-v,--version}'[output version number]' \
+    '(-p --print)'{-p,--print}'[print response and exit]' \
+    '(-c --continue)'{-c,--continue}'[continue most recent conversation]' \
+    '(-r --resume)'{-r,--resume}'[resume conversation by session ID]::session_id:' \
+    '(-d --debug)'{-d,--debug}'[enable debug mode]::filter:' \
+    '(-n --name)'{-n,--name}'[set display name for session]:name:' \
+    '(-w --worktree)'{-w,--worktree}'[create git worktree for session]::name:' \
+    '--add-dir[additional directories for tool access]:directory:_files -/' \
+    '--agent[agent for current session]:agent:' \
+    '--agents[JSON object defining custom agents]:json:' \
+    '--allow-dangerously-skip-permissions[enable bypassing permission checks without default]' \
+    '--allowed-tools[tools to allow]:tools:' \
+    '--allowedTools[tools to allow]:tools:' \
+    '--append-system-prompt[append to default system prompt]:prompt:' \
+    '--bare[minimal mode: skip hooks, LSP, plugins, and more]' \
+    '--betas[beta headers to include in API requests]:betas:' \
+    '--brief[enable SendUserMessage tool]' \
+    '--chrome[enable Claude in Chrome integration]' \
+    '--dangerously-skip-permissions[bypass all permission checks]' \
+    '--debug-file[write debug logs to file]:path:_files' \
+    '--disable-slash-commands[disable all skills]' \
+    '--disallowed-tools[tools to deny]:tools:' \
+    '--disallowedTools[tools to deny]:tools:' \
+    '--effort[effort level for session]:level:(low medium high xhigh max)' \
+    '--exclude-dynamic-system-prompt-sections[move per-machine sections to first user message]' \
+    '--fallback-model[fallback model when default unavailable]:model:' \
+    '--file[file resources to download at startup]:specs:' \
+    '--fork-session[create new session ID when resuming]' \
+    '--from-pr[resume session linked to PR]::pr:' \
+    '--ide[automatically connect to IDE on startup]' \
+    '--include-hook-events[include hook lifecycle events in output stream]' \
+    '--include-partial-messages[include partial message chunks as they arrive]' \
+    '--input-format[input format]:format:(text stream-json)' \
+    '--json-schema[JSON schema for structured output validation]:schema:' \
+    '--max-budget-usd[maximum dollar amount for API calls]:amount:' \
+    '--mcp-config[load MCP servers from JSON files]:configs:_files' \
+    '--model[model for session]:model:(fable opus sonnet haiku claude-fable-5 claude-opus-4-8 claude-sonnet-4-6 claude-haiku-4-5-20251001)' \
+    '--no-chrome[disable Claude in Chrome integration]' \
+    '--no-session-persistence[disable session persistence]' \
+    '--output-format[output format]:format:(text json stream-json)' \
+    '--permission-mode[permission mode for session]:mode:(acceptEdits auto bypassPermissions default dontAsk plan)' \
+    '--plugin-dir[load plugin from directory]:path:_files -/' \
+    '--plugin-url[fetch plugin from URL]:url:' \
+    '--prompt-suggestions[enable prompt suggestions]::value:(true false)' \
+    '--remote-control[start with remote control enabled]::name:' \
+    '--remote-control-session-name-prefix[prefix for auto-generated remote control session names]:prefix:' \
+    '--replay-user-messages[re-emit user messages from stdin on stdout]' \
+    '--safe-mode[start with all customizations disabled]' \
+    '--session-id[use specific session ID]:uuid:' \
+    '--setting-sources[setting sources to load]:sources:(user project local)' \
+    '--settings[settings file or JSON string]:file-or-json:_files' \
+    '--strict-mcp-config[only use MCP servers from --mcp-config]' \
+    '--system-prompt[system prompt for session]:prompt:' \
+    '--tmux[create tmux session for worktree]' \
+    '--tools[available tools from built-in set]:tools:' \
+    '--verbose[override verbose mode setting from config]' \
+    '1:command:->command' \
+    '*::args:->args'
+
+  case $state in
+    command)
+      local -a subcommands
+      subcommands=(
+        'agents:manage background agents'
+        'auth:manage authentication'
+        'auto-mode:inspect auto mode classifier configuration'
+        'doctor:check health of Claude Code auto-updater'
+        'install:install Claude Code native build'
+        'mcp:configure and manage MCP servers'
+        'plugin:manage Claude Code plugins'
+        'plugins:manage Claude Code plugins'
+        'project:manage Claude Code project state'
+        'setup-token:set up a long-lived authentication token'
+        'ultrareview:run cloud-hosted multi-agent code review'
+        'update:check for updates and install if available'
+        'upgrade:check for updates and install if available'
+      )
+      _describe 'subcommand' subcommands
+      ;;
+    args)
+      case $line[1] in
+        agents)     _claude_agents ;;
+        auth)       _claude_auth ;;
+        mcp)        _claude_mcp ;;
+        plugin|plugins) _claude_plugin ;;
+        project)    _claude_project ;;
+        install)    _claude_install ;;
+      esac
+      ;;
+  esac
+}
+
+_claude_agents() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '--add-dir[additional directory for tool access]:directory:_files -/' \
+    '--agent[default agent for dispatched sessions]:agent:' \
+    '--all[include completed sessions with --json]' \
+    '--allow-dangerously-skip-permissions[make bypass-permissions available to dispatched sessions]' \
+    '--cwd[show only sessions under path]:path:_files -/' \
+    '--dangerously-skip-permissions[alias for --permission-mode bypassPermissions]' \
+    '--effort[default effort level]:level:(low medium high xhigh max)' \
+    '--json[print active sessions as JSON and exit]' \
+    '--mcp-config[MCP server configuration for dispatched sessions]:config:_files' \
+    '--model[default model for dispatched sessions]:model:(fable opus sonnet haiku)' \
+    '--permission-mode[default permission mode]:mode:(acceptEdits auto bypassPermissions default dontAsk plan)' \
+    '--plugin-dir[load plugins from directory]:path:_files -/' \
+    '--setting-sources[setting sources to load]:sources:(user project local)' \
+    '--settings[settings file or JSON]:file-or-json:_files' \
+    '--strict-mcp-config[only use MCP servers from --mcp-config]'
+}
+
+_claude_auth() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '1:subcommand:->subcommand' \
+    '*::args:->args'
+
+  case $state in
+    subcommand)
+      local -a subcommands
+      subcommands=(
+        'login:sign in to your Anthropic account'
+        'logout:log out from your Anthropic account'
+        'status:show authentication status'
+      )
+      _describe 'auth subcommand' subcommands
+      ;;
+    args)
+      case $line[1] in
+        login)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '--claudeai[use Claude subscription (default)]' \
+            '--console[use Anthropic Console API billing]' \
+            '--email[pre-populate email on login page]:email:' \
+            '--sso[force SSO login flow]'
+          ;;
+        status)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '--json[output as JSON (default)]' \
+            '--text[output as human-readable text]'
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_claude_mcp() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '1:subcommand:->subcommand' \
+    '*::args:->args'
+
+  case $state in
+    subcommand)
+      local -a subcommands
+      subcommands=(
+        'add:add an MCP server'
+        'add-from-claude-desktop:import MCP servers from Claude Desktop'
+        'add-json:add an MCP server with a JSON string'
+        'get:get details about an MCP server'
+        'list:list configured MCP servers'
+        'remove:remove an MCP server'
+        'reset-project-choices:reset all approved and rejected project-scoped servers'
+        'serve:start the Claude Code MCP server'
+      )
+      _describe 'mcp subcommand' subcommands
+      ;;
+    args)
+      case $line[1] in
+        add)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '(-t --transport)'{-t,--transport}'[transport type]:transport:(stdio sse http)' \
+            '(-s --scope)'{-s,--scope}'[configuration scope]:scope:(local user project)' \
+            '(-e --env)'{-e,--env}'[set environment variables]:env:' \
+            '(-H --header)'{-H,--header}'[set WebSocket headers]:header:' \
+            '--callback-port[fixed port for OAuth callback]:port:' \
+            '--client-id[OAuth client ID]:client-id:' \
+            '--client-secret[prompt for OAuth client secret]' \
+            '1:name:' \
+            '2:command-or-url:'
+          ;;
+        add-json)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '(-s --scope)'{-s,--scope}'[configuration scope]:scope:(local user project)' \
+            '1:name:' \
+            '2:json:'
+          ;;
+        get)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:name:'
+          ;;
+        remove)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '(-s --scope)'{-s,--scope}'[configuration scope]:scope:(local user project)' \
+            '1:name:'
+          ;;
+        serve)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '(-d --debug)'{-d,--debug}'[enable debug mode]' \
+            '--verbose[override verbose mode setting from config]'
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_claude_plugin() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '1:subcommand:->subcommand' \
+    '*::args:->args'
+
+  case $state in
+    subcommand)
+      local -a subcommands
+      subcommands=(
+        'details:show a plugin'\''s component inventory and token cost'
+        'disable:disable an enabled plugin'
+        'enable:enable a disabled plugin'
+        'init:scaffold a new plugin'
+        'new:scaffold a new plugin'
+        'install:install a plugin from marketplaces'
+        'i:install a plugin from marketplaces'
+        'list:list installed plugins'
+        'marketplace:manage Claude Code marketplaces'
+        'prune:remove auto-installed dependencies no longer needed'
+        'autoremove:remove auto-installed dependencies no longer needed'
+        'tag:create a git tag for plugin release'
+        'uninstall:uninstall an installed plugin'
+        'remove:uninstall an installed plugin'
+        'update:update a plugin to latest version'
+        'validate:validate a plugin or marketplace manifest'
+      )
+      _describe 'plugin subcommand' subcommands
+      ;;
+    args)
+      case $line[1] in
+        enable|disable|details|uninstall|remove|update)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:plugin:'
+          ;;
+        install|i)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:plugin:'
+          ;;
+        init|new)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:name:'
+          ;;
+        validate)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:path:_files -/'
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_claude_project() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '1:subcommand:->subcommand' \
+    '*::args:->args'
+
+  case $state in
+    subcommand)
+      local -a subcommands
+      subcommands=(
+        'purge:delete all Claude Code state for a project'
+      )
+      _describe 'project subcommand' subcommands
+      ;;
+    args)
+      case $line[1] in
+        purge)
+          _arguments \
+            '(-h --help)'{-h,--help}'[display help]' \
+            '1:path:_files -/'
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_claude_install() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[display help]' \
+    '1:target:(stable latest)'
+}
+
+_claude "$@"
