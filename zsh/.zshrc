@@ -2,7 +2,8 @@ bindkey -v
 alias vi='nvim'
 
 export COLORTERM=truecolor
-typeset -U path fpath  
+eval "$(/opt/homebrew/bin/brew shellenv)"
+typeset -U path fpath
 
 export GOPATH="$HOME/.go"
 path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" $path)
@@ -21,7 +22,7 @@ else
 fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C ~/.local/bin/terraform terraform
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 git_prompt() {
   local b=$(git branch --show-current 2>/dev/null)
