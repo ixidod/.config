@@ -6,7 +6,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 typeset -U path fpath
 
 export GOPATH="$HOME/.go"
-path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" $path)
+path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" "/opt/homebrew/opt/ruby/bin" "/opt/homebrew/lib/ruby/gems/4.0.0/bin" $path)
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
