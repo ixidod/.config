@@ -35,11 +35,9 @@ g.netrw_banner = 0
 g.netrw_liststyle = 3
 g.netrw_winsize = 25
 g.netrw_altv = 1
-g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+,\(^\|\s\s\)ntuser\.\S\+]]
+g.netrw_dotfiles = 1
 
 require('lsp.kb')
 require('lsp.go')
 require('lsp.terraform')
-require('lsp.typescript')
-require('lsp.tailwind')
 require('lsp.ruby')
