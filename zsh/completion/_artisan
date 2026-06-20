@@ -1,0 +1,23 @@
+#compdef artisan
+
+_artisan() {
+  local -a commands
+  local artisan_bin='php artisan'
+
+  [[ -f artisan ]] || return 1
+
+  if (( CURRENT == 2 )); then
+    local raw
+    raw=$(php artisan list --raw 2>/dev/null) || return 1
+    while IFS= read -r line; do
+      local cmd=${line%%  *}
+      local desc=${line##*  }
+      [[ -n $cmd ]] && commands+=("${cmd}:${desc// #/}")
+    done <<< "$raw"
+    _describe 'artisan commands' commands
+  else
+    _files
+  fi
+}
+
+_artisan "$@"

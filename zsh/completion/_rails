@@ -1,0 +1,235 @@
+#compdef rails
+
+_rails() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '(-v --version)'{-v,--version}'[show version]' \
+    '1: :_rails_commands' \
+    '*:: :->args'
+
+  case $state in
+    args)
+      case $words[1] in
+        new)          _rails_new ;;
+        generate|g)   _rails_generate_cmd ;;
+        destroy|d)    _rails_generate_cmd ;;
+        server|s)     _rails_server ;;
+        console|c)    _rails_console ;;
+        test|t)       _rails_test ;;
+        dbconsole|db) _rails_dbconsole ;;
+        routes)       _rails_routes ;;
+        runner|r)     _message 'Ruby code or file path' ;;
+        plugin)       _rails_plugin ;;
+      esac
+      ;;
+  esac
+}
+
+_rails_commands() {
+  local -a cmds tasks
+  if [[ -f config/environment.rb || -f config/application.rb ]]; then
+    cmds=(
+      'console:start the Rails console'
+      'server:start the Rails server'
+      'test:run tests'
+      'generate:generate new code'
+      'destroy:undo a generate'
+      'dbconsole:open the DB console'
+      'runner:run Ruby code in Rails context'
+      'routes:print all routes'
+      'new:create a new Rails application'
+      'plugin:plugin tasks'
+      'version:show Rails version'
+      'c:alias for console'
+      's:alias for server'
+      't:alias for test'
+      'g:alias for generate'
+      'd:alias for destroy'
+      'db:alias for dbconsole'
+      'r:alias for runner'
+    )
+    tasks=(
+      'db\:migrate:run pending migrations'
+      'db\:rollback:rollback last migration'
+      'db\:seed:load seed data'
+      'db\:create:create the database'
+      'db\:drop:drop the database'
+      'db\:reset:drop, create, migrate and seed'
+      'db\:schema\:load:load schema.rb into the database'
+      'db\:schema\:dump:dump database schema to schema.rb'
+      'db\:migrate\:status:show migration status'
+      'db\:migrate\:redo:rollback and re-run last migration'
+      'assets\:precompile:precompile assets for production'
+      'assets\:clean:clean old compiled assets'
+      'cache\:clear:clear the cache'
+      'credentials\:edit:edit encrypted credentials'
+      'credentials\:show:show decrypted credentials'
+      'log\:clear:clear log files'
+      'tmp\:clear:clear tmp files'
+      'stats:show code statistics'
+      'notes:show code annotations (TODO, FIXME, etc.)'
+      'secret:generate a secure random token'
+      'middleware:show Rack middleware stack'
+      'initializers:print all initializers'
+      'time\:zones:list all time zones'
+      'about:show Rails and system info'
+    )
+    _describe -t rails-commands 'command' cmds
+    _describe -t rails-tasks 'rake task' tasks
+  else
+    cmds=(
+      'new:create a new Rails application'
+      'plugin:plugin tasks'
+      'version:show version'
+    )
+    _describe -t rails-commands 'command' cmds
+  fi
+}
+
+_rails_new() {
+  _arguments \
+    '--skip-namespace[skip namespace (isolated engines only)]' \
+    '--skip-collision-check[skip collision check]' \
+    '(-r --ruby)'{-r,--ruby}'=[path to Ruby binary]:ruby binary:_files' \
+    '(-n --name)'{-n,--name}'=[application name]:name' \
+    '(-m --template)'{-m,--template}'=[application template (path or URL)]:template:_files' \
+    '(-d --database)'{-d,--database}'=[preconfigure database]:database:(mysql trilogy postgresql sqlite3 mariadb-mysql mariadb-trilogy)' \
+    '(-G --skip-git)'{-G,--skip-git}'[skip git init, .gitignore and .gitattributes]' \
+    '--skip-docker[skip Dockerfile and .dockerignore]' \
+    '--skip-keeps[skip .keep files]' \
+    '(-M --skip-action-mailer)'{-M,--skip-action-mailer}'[skip Action Mailer]' \
+    '--skip-action-mailbox[skip Action Mailbox]' \
+    '--skip-action-text[skip Action Text]' \
+    '(-O --skip-active-record)'{-O,--skip-active-record}'[skip Active Record]' \
+    '--skip-active-job[skip Active Job]' \
+    '--skip-active-storage[skip Active Storage]' \
+    '(-C --skip-action-cable)'{-C,--skip-action-cable}'[skip Action Cable]' \
+    '(-A --skip-asset-pipeline)'{-A,--skip-asset-pipeline}'[skip asset pipeline]' \
+    '(-J --skip-javascript)'{-J,--skip-javascript}'[skip JavaScript files]' \
+    '--skip-hotwire[skip Hotwire integration]' \
+    '--skip-jbuilder[skip jbuilder gem]' \
+    '(-T --skip-test)'{-T,--skip-test}'[skip test files]' \
+    '--skip-system-test[skip system test files]' \
+    '--skip-bootsnap[skip bootsnap gem]' \
+    '--skip-dev-gems[skip development gems]' \
+    '--skip-thruster[skip Thruster setup]' \
+    '--skip-rubocop[skip RuboCop setup]' \
+    '--skip-brakeman[skip brakeman setup]' \
+    '--skip-bundler-audit[skip bundler-audit setup]' \
+    '--skip-ci[skip GitHub CI files]' \
+    '--skip-kamal[skip Kamal setup]' \
+    '--skip-solid[skip Solid Cache, Queue, and Cable]' \
+    '--dev[use local Rails checkout in Gemfile]' \
+    '--devcontainer[generate devcontainer files]' \
+    '--edge[use 8-1-stable branch]' \
+    '--main[use Rails main branch]' \
+    '--api[API-only application]' \
+    '--minimal[minimal Rails app]' \
+    '(-j --javascript)'{-j,--javascript}'=[JavaScript approach]:js:(importmap bun webpack esbuild rollup)' \
+    '(-c --css)'{-c,--css}'=[CSS processor]:css:(tailwind bootstrap bulma postcss sass)' \
+    '(-B --skip-bundle)'{-B,--skip-bundle}'[skip bundle install]' \
+    '--skip-decrypted-diffs[skip git decrypted diffs config]' \
+    '(-f --force)'{-f,--force}'[overwrite existing files]' \
+    '(-p --pretend)'{-p,--pretend}'[dry run, no changes made]' \
+    '1:app path:_files -/'
+}
+
+_rails_generate_cmd() {
+  local -a generators
+  generators=(
+    'scaffold:full CRUD scaffold (model, views, controller, migration)'
+    'scaffold_controller:scaffold controller only'
+    'model:Active Record model and migration'
+    'controller:controller and views'
+    'migration:database migration'
+    'mailer:Action Mailer class'
+    'job:Active Job class'
+    'channel:Action Cable channel'
+    'helper:view helper module'
+    'integration_test:integration test'
+    'resource:resourceful route, model, and controller'
+    'system_test:system test with Capybara'
+    'task:Rake task'
+    'generator:custom generator'
+    'mailbox:Action Mailbox mailbox'
+    'responder:respond_with responder'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe -t generators 'generator' generators
+  else
+    case $words[2] in
+      scaffold|model|resource|migration)
+        _message 'NAME [field:type ...]'
+        ;;
+      controller|mailer|channel|job|mailbox)
+        _message 'NAME [action ...]'
+        ;;
+      *)
+        _message 'NAME'
+        ;;
+    esac
+  fi
+}
+
+_rails_server() {
+  _arguments \
+    '(-p --port)'{-p,--port}'=[port to listen on]:port' \
+    '(-b --binding)'{-b,--binding}'=[IP address to bind to]:host' \
+    '(-c --config)'{-c,--config}'=[Rackup config file]:file:_files' \
+    '(-d --daemon)'{-d,--daemon}'[run as a daemon]' \
+    '(-e --environment)'{-e,--environment}'=[environment]:env:(development test production)' \
+    '(-P --pid)'{-P,--pid}'=[PID file path]:file:_files' \
+    '(-C --no-caching)'{-C,--no-caching}'[disable caching in development]' \
+    '--early-hints[enable HTTP/2 early hints]' \
+    '--restart[restart server]' \
+    '--stop[stop server]'
+}
+
+_rails_console() {
+  _arguments \
+    '(-e --environment)'{-e,--environment}'=[environment]:env:(development test production)' \
+    '(-s --sandbox)'{-s,--sandbox}'[rollback all DB changes on exit]' \
+    '--no-sandbox[disable sandbox mode]'
+}
+
+_rails_dbconsole() {
+  _arguments \
+    '(-e --environment)'{-e,--environment}'=[environment]:env:(development test production)' \
+    '(-p --include-password)'{-p,--include-password}'[include DB password in connection]' \
+    '--mode=[output mode]:mode:(column line list record tab)' \
+    '--header[print column headers]'
+}
+
+_rails_routes() {
+  _arguments \
+    '(-c --controller)'{-c,--controller}'=[filter by controller]:controller' \
+    '(-g --grep)'{-g,--grep}'=[grep routes by pattern]:pattern' \
+    '(-E --expanded)'{-E,--expanded}'[expanded table output]' \
+    '--unused[show unused routes]' \
+    '(-u --unused)'{-u,--unused}'[show unused routes]'
+}
+
+_rails_test() {
+  _arguments \
+    '(-e --environment)'{-e,--environment}'=[environment]:env:(development test production)' \
+    '(-b --backtrace)'{-b,--backtrace}'[show full backtraces]' \
+    '(-d --defer-output)'{-d,--defer-output}'[defer output until tests finish]' \
+    '(-f --fail-fast)'{-f,--fail-fast}'[stop on first failure or error]' \
+    '(-p --pride)'{-p,--pride}'[pride output]' \
+    '(-v --verbose)'{-v,--verbose}'[verbose output]' \
+    '*:test file:_files -g "**/*_test.rb"'
+}
+
+_rails_plugin() {
+  local -a subcmds
+  subcmds=(
+    'new:create a new Rails railtie or engine'
+  )
+  _describe -t plugin-commands 'subcommand' subcmds
+}
+
+_rails "$@"
