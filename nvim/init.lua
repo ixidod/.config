@@ -39,13 +39,7 @@ g.netrw_dotfiles = 1
 
 vim.keymap.set('n', '<leader>e', ':Lex<CR>', { silent = true })
 
-vim.filetype.add({
-  pattern = { ['.*%.blade%.php'] = 'html' },
-})
-
 require('lsp.kb')
 require('lsp.go')
-require('lsp.terraform')
 require('lsp.ruby')
-require('lsp.php')
 require('lsp.tailwind')

@@ -2,11 +2,13 @@ bindkey -v
 alias vi='nvim'
 
 export COLORTERM=truecolor
+export PYTHON_BASIC_REPL=1
+export PYTHONSTARTUP="$HOME/.config/python/pythonrc.py"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 typeset -U path fpath
 
 export GOPATH="$HOME/.go"
-path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" "$HOME/.composer/vendor/bin" "/opt/homebrew/opt/ruby/bin" "/opt/homebrew/lib/ruby/gems/4.0.0/bin" $path)
+path=("/usr/local/go/bin" "$HOME/.local/bin" "$HOME/.go/bin" "/opt/homebrew/opt/ruby/bin" "/opt/homebrew/lib/ruby/gems/4.0.0/bin" $path)
 fpath=("$HOME/.config/zsh/completion" $fpath)
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -19,7 +21,6 @@ else
 fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
 source "$HOME/.config/zsh/completion/npm_completion"
 source "$HOME/.config/zsh/completion/node_completion"
 
