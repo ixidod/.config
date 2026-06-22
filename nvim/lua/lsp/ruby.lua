@@ -20,7 +20,7 @@ vim.lsp.config('ruby_lsp', {
     on_dir(root or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':h'))
   end,
   init_options = {
-    formatter = 'rubocop_internal',
+    formatter = 'none',
     linters = {},
   },
 })
