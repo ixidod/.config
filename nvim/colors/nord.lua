@@ -16,6 +16,7 @@ local c = {
   bg2     = 239,   -- even lighter
   fg      = 253,   -- light gray
   fgdim   = 60,    -- muted gray-blue
+  commentfg = 248, -- lighter gray, for more legible comments
   none    = "NONE",
 }
 
@@ -99,8 +100,8 @@ hi("SpecialKey", { ctermfg = c.bg2 })
 hi("MatchParen", { ctermfg = c.fg, ctermbg = c.bg2, bold = true })
 hi("WildMenu",   { ctermfg = c.bg, ctermbg = c.fg })
 
--- All syntax = same foreground (monochrome)
-hi("Comment",     { ctermfg = c.fgdim, italic = true })
+-- Monochrome syntax
+hi("Comment",     { ctermfg = c.commentfg, italic = true })
 hi("Constant",    { ctermfg = c.fg })
 hi("String",      { ctermfg = c.fg })
 -- hi("String",      { ctermfg = c.fgdim })
@@ -134,7 +135,7 @@ hi("Debug",       { ctermfg = c.fg })
 hi("Underlined",  { ctermfg = c.fg, underline = true })
 hi("Error",       { ctermfg = c.fg, underline = true })
 hi("Todo",        { ctermfg = c.fg, bold = true })
-hi("SpecialComment", { ctermfg = c.fgdim })
+hi("SpecialComment", { ctermfg = c.commentfg })
 
 -- Diagnostics (subtle)
 hi("DiagnosticError", { ctermfg = c.fg })

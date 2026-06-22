@@ -2,6 +2,7 @@ vim.cmd("colorscheme nord")
 
 local opt = vim.opt
 local g = vim.g
+local cmd = vim.cmd
 
 opt.shortmess:append("I")
 opt.fillchars = { eob = " " }
@@ -29,15 +30,15 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
-g.mapleader = " "
 
+cmd('autocmd BufEnter * setlocal formatoptions-=cro')
+
+g.mapleader = " "
 g.netrw_banner = 0
 g.netrw_liststyle = 3
 g.netrw_winsize = 25
 g.netrw_altv = 1
 g.netrw_dotfiles = 1
-
-vim.keymap.set('n', '<leader>e', ':Lex<CR>', { silent = true })
 
 require('lsp.kb')
 require('lsp.go')

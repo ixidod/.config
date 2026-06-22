@@ -1,5 +1,7 @@
 vim.diagnostic.config({ virtual_text = { prefix = '' }, signs = false, underline = true, float = { wrap = true } })
 
+vim.keymap.set('n', '<leader>e', ':Lex<CR>', { silent = true })
+
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local opts = { buffer = args.buf }

@@ -2,8 +2,6 @@ bindkey -v
 alias vi='nvim'
 
 export COLORTERM=truecolor
-export PYTHON_BASIC_REPL=1
-export PYTHONSTARTUP="$HOME/.config/python/pythonrc.py"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 typeset -U path fpath
 
@@ -23,6 +21,8 @@ fi
 autoload -U +X bashcompinit && bashcompinit
 source "$HOME/.config/zsh/completion/npm_completion"
 source "$HOME/.config/zsh/completion/node_completion"
+
+#git it 
 
 git_prompt() {
   local b=$(git branch --show-current 2>/dev/null)
