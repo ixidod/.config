@@ -2,7 +2,6 @@ vim.cmd("colorscheme nord")
 
 local opt = vim.opt
 local g = vim.g
-local cmd = vim.cmd
 
 opt.shortmess:append("I")
 opt.fillchars = { eob = " " }
@@ -30,8 +29,6 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
-
-cmd('autocmd BufEnter * setlocal formatoptions-=cro')
 
 g.mapleader = " "
 g.netrw_banner = 0
