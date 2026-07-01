@@ -1,6 +1,28 @@
 vim.diagnostic.config({ virtual_text = { prefix = '' }, signs = false, underline = true, float = { wrap = true } })
 
+local function resize_netrw()
+  local max_len = 0
+  for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
+    local len = vim.fn.strdisplaywidth(line)
+    if len > max_len then
+      max_len = len
+    end
+  end
+  vim.cmd('vertical resize ' .. math.max(20, math.min(max_len + 2, 80)))
+end
+
 vim.keymap.set('n', '<leader>e', ':Lex<CR>', { silent = true })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'netrw',
+  callback = function(args)
+    resize_netrw()
+    vim.api.nvim_create_autocmd('TextChanged', {
+      buffer = args.buf,
+      callback = resize_netrw,
+    })
+  end,
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
