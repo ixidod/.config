@@ -5,7 +5,7 @@
 .DS_Store
 /containers
 /gh
-/mpv
+/mpv/watch_later
 zsh/.zcompdump
 zsh/.zcompcache/
 zsh/.zsh_history
