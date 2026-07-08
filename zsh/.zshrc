@@ -24,8 +24,6 @@ source "$HOME/.config/zsh/completion/npm_completion"
 source "$HOME/.config/zsh/completion/node_completion"
 source "$HOME/.config/zsh/completion/terraform_completion"
 
-#git it 
-
 git_prompt() {
   local b=$(git branch --show-current 2>/dev/null)
   [[ -z $b ]] && return
