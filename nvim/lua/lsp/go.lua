@@ -10,6 +10,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
+  cmd_env = {
+    GOMEMLIMIT = '2GiB',
+  },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
   root_markers = { 'go.work', 'go.mod', '.git' },
   init_options = {
@@ -18,7 +21,8 @@ vim.lsp.config('gopls', {
   settings = {
     gopls = {
       analyses = { unusedparams = true },
-      staticcheck = true,
+      staticcheck = false,
+      directoryFilters = { '-vendor', '-docs', '-examples', '-nix', '-loki-build-image' },
     },
   },
 })

@@ -1,7 +1,7 @@
 bindkey -v
 alias vi='nvim'
 mpvbg() { nohup mpv "$@" > /dev/null 2>&1 & disown }
-
+export AGY_CLI_HIDE_ACCOUNT_INFO=1
 export COLORTERM=truecolor
 eval "$(/opt/homebrew/bin/brew shellenv)"
 typeset -U path fpath

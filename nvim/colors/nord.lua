@@ -16,7 +16,7 @@ local c = {
   bg2     = 239,   -- even lighter
   fg      = 253,   -- light gray
   fgdim   = 60,    -- muted gray-blue
-  commentfg = 248, -- lighter gray, for more legible comments
+  commentfg = 173, -- Claude Code orange (#D97757), for comments
   none    = "NONE",
 }
 
