@@ -43,6 +43,5 @@ g.netrw_dotfiles = 1
 require('lsp.kb')
 require('lsp.go')
 require('lsp.ruby')
-require('lsp.tailwind')
 require('lsp.terraform')
 require('lsp.python')
