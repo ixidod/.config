@@ -40,6 +40,7 @@ g.netrw_winsize = 25
 g.netrw_altv = 1
 g.netrw_dotfiles = 1
 
+require('lsp.prose')
 require('lsp.kb')
 require('lsp.go')
 require('lsp.python')
